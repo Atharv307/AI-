@@ -1,17 +1,20 @@
 'use client';
 
 import React, { useState } from 'react';
-import { Terminal as TerminalIcon, Code, BookOpen, Layout } from 'lucide-react';
+import { Terminal as TerminalIcon, Code, BookOpen, Layout, Play } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { Button } from '@/components/ui/button';
 import { FileExplorer } from '@/components/sandbox/FileExplorer';
 import { CodeEditor } from '@/components/sandbox/CodeEditor';
 import { Terminal } from '@/components/sandbox/Terminal';
 import { LessonViewer } from '@/components/curriculum/LessonViewer';
 import { AIAssistant } from '@/components/AIAssistant';
 import { PromptPlayground } from '@/components/PromptPlayground';
+import { Dashboard } from '@/components/Dashboard';
 import { lessons } from '@/lib/curriculum/content';
 
 export default function WorkspacePage() {
+  const [view, setView] = useState<'workspace' | 'dashboard'>('workspace');
   const [currentLesson] = useState(lessons[0]);
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [fileContent, setFileContent] = useState('');
@@ -48,6 +51,32 @@ export default function WorkspacePage() {
 
   return (
     <div className="flex h-screen w-full bg-background overflow-hidden">
+      {/* Navigation Rail */}
+      <div className="w-16 border-r flex flex-col items-center py-4 gap-4 bg-muted/20">
+        <Button
+          variant={view === 'workspace' ? 'default' : 'ghost'}
+          size="icon"
+          onClick={() => setView('workspace')}
+          title="Workspace"
+        >
+          <Code size={20} />
+        </Button>
+        <Button
+          variant={view === 'dashboard' ? 'default' : 'ghost'}
+          size="icon"
+          onClick={() => setView('dashboard')}
+          title="Dashboard"
+        >
+          <Layout size={20} />
+        </Button>
+      </div>
+
+      {view === 'dashboard' ? (
+        <div className="flex-1 overflow-auto">
+          <Dashboard />
+        </div>
+      ) : (
+        <>
       {/* Sidebar - Curriculum & Files */}
       <div className="w-80 flex flex-col border-r">
         <Tabs defaultValue="lesson" className="flex-1 flex flex-col">
@@ -82,8 +111,19 @@ export default function WorkspacePage() {
                 <Layout size={14} className="mr-2" /> Prompt Playground
               </TabsTrigger>
             </TabsList>
-            <div className="text-[10px] text-muted-foreground font-mono">
-              {selectedFile || 'No file open'}
+            <div className="flex items-center gap-4">
+              <div className="text-[10px] text-muted-foreground font-mono">
+                {selectedFile || 'No file open'}
+              </div>
+              <Button
+                size="sm"
+                variant="default"
+                className="h-7 text-xs px-3"
+                disabled={!selectedFile}
+                onClick={() => selectedFile && handleRunCommand(`python3 ${selectedFile}`)}
+              >
+                <Play size={14} className="mr-2" /> Run
+              </Button>
             </div>
           </div>
 
@@ -131,6 +171,8 @@ export default function WorkspacePage() {
           }
         }} />
       </div>
+        </>
+      )}
     </div>
   );
 }

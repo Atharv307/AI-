@@ -1,5 +1,16 @@
 import { Lesson } from '@/types';
 
+import { Track } from '@/types';
+
+export const tracks: Track[] = [
+  { id: 'prompt-engineering', title: 'Prompt Engineering & LLM Basics', description: 'Master the art of communicating with AI.', icon: 'message-square' },
+  { id: 'ai-coding', title: 'AI Coding & Vibe Coding', description: 'Build full apps using AI coding agents.', icon: 'code' },
+  { id: 'rag-systems', title: 'RAG Systems & Knowledge Assistants', description: 'Connect AI to your own data.', icon: 'database' },
+  { id: 'agentic-ai', title: 'Agentic AI & Multi-Agent Systems', description: 'Build autonomous AI teams.', icon: 'users' },
+  { id: 'systems-thinking', title: 'Software Systems Thinking & Architecture', description: 'Design complex AI-powered systems.', icon: 'layout' },
+  { id: 'mlops', title: 'MLOps, CI/CD & Production Deployment', description: 'Deploy and monitor AI in the real world.', icon: 'rocket' },
+];
+
 export const lessons: Lesson[] = [
   {
     id: 'terminal-basics',
@@ -87,6 +98,78 @@ An agent is just code that uses an LLM to make decisions or perform tasks. You'r
       { id: 'a1', description: 'Generate agent script', completed: false },
       { id: 'a2', description: 'Run agent script', completed: false },
       { id: 'a3', description: 'Customize the agent prompt', completed: false },
+    ],
+  },
+  {
+    id: 'vibe-coding-site',
+    title: 'Vibe Coding: Personal Website',
+    description: 'Build a personal website using only AI coding agents.',
+    track: 'ai-coding',
+    difficulty: 'beginner',
+    content: `
+# Project: Your Personal Website
+
+In this module, you'll experience **Vibe Coding**. Instead of writing code line-by-line, you'll describe your vision to the AI and refine it until it's perfect.
+
+### Objective
+Build a feature-rich personal website with an integrated AI Digital Twin.
+
+### Tasks
+1. Ask the AI Assistant: "I want to build a personal website with a hero section, an about me section, and a blog. Use Tailwind CSS."
+2. Guide the AI to add a "Chat with my Digital Twin" feature.
+3. Deploy your site locally and view it.
+`,
+    tasks: [
+      { id: 'v1', description: 'Generate website structure', completed: false },
+      { id: 'v2', description: 'Add AI Digital Twin chat', completed: false },
+      { id: 'v3', description: 'View site in browser', completed: false },
+    ],
+  },
+  {
+    id: 'rag-knowledge-assistant',
+    title: 'Build a RAG Knowledge Assistant',
+    description: 'Create an AI that knows your personal documents.',
+    track: 'rag-systems',
+    difficulty: 'intermediate',
+    content: `
+# Project: Personal Knowledge Assistant
+
+Learn how to use **RAG (Retrieval-Augmented Generation)** to make an AI that can answer questions based on your own PDF or Text files.
+
+### Objective
+Develop a production-ready RAG assistant.
+
+### Tasks
+1. Ask the AI to "Write a script that uses LangChain or a simple vector search to read a local document."
+2. Integrate the local LLM to answer questions about that document.
+3. Add a basic automated testing workflow to verify accuracy.
+`,
+    tasks: [
+      { id: 'r1', description: 'Implement document loading', completed: false },
+      { id: 'r2', description: 'Implement vector search', completed: false },
+      { id: 'r3', description: 'Connect LLM for QA', completed: false },
+    ],
+  },
+  {
+    id: 'capstone-1-digital-twin',
+    title: 'Capstone 1: AI Digital Twin',
+    description: 'Build a complete AI Digital Twin that represents you professionally.',
+    track: 'systems-thinking',
+    difficulty: 'advanced',
+    content: `
+# Capstone: Your AI Digital Twin
+
+Combine everything you've learned to build a sophisticated AI agent that can represent you, answer questions about your experience, and even schedule meetings.
+
+### Tasks
+1. Build the frontend (Vibe Coding).
+2. Implement the knowledge base (RAG).
+3. Deploy as a production-ready tool (MLOps).
+`,
+    tasks: [
+      { id: 'c1-1', description: 'Design Digital Twin Persona', completed: false },
+      { id: 'c1-2', description: 'Implement Multi-modal interface', completed: false },
+      { id: 'c1-3', description: 'Final Capstone Submission', completed: false },
     ],
   }
 ];

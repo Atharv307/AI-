@@ -26,6 +26,17 @@ export interface Task {
 
 export interface UserProgress {
   completedLessons: string[];
+  completedProjects: string[];
   currentLessonId?: string;
   skills: string[];
+  commandsMastered: string[];
+  targetJob?: string;
+  skillLevel: 'beginner' | 'intermediate' | 'advanced';
+}
+
+export interface Track {
+  id: TrackId;
+  title: string;
+  description: string;
+  icon: string;
 }
