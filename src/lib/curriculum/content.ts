@@ -1,6 +1,4 @@
-import { Lesson } from '@/types';
-
-import { Track } from '@/types';
+import { Lesson, Track } from '@/types';
 
 export const tracks: Track[] = [
   { id: 'prompt-engineering', title: 'Prompt Engineering & LLM Basics', description: 'Master the art of communicating with AI.', icon: 'message-square' },
@@ -12,164 +10,269 @@ export const tracks: Track[] = [
 ];
 
 export const lessons: Lesson[] = [
+  // --- TRACK: PROMPT ENGINEERING ---
   {
-    id: 'terminal-basics',
-    title: 'Terminal & Environment Setup',
-    description: 'Get comfortable with the tools of the trade.',
-    track: 'ai-coding',
-    difficulty: 'beginner',
-    content: `
-# Lesson 1: Your Engineering Command Center
-
-Before we build AI, we need to know how to talk to our computer. The **Terminal** is where you will run your AI models and your code.
-
-### Objective
-Learn basic terminal commands and verify your environment.
-
-### Tasks
-1. Type \`ls\` in the terminal to see your files.
-2. Type \`python3 --version\` to check if Python is installed.
-3. Ask the AI Assistant to create a "Hello World" Python file for you.
-
-### Why the Terminal?
-Real AI engineering happens in the terminal. It's faster, more powerful, and allows you to automate complex tasks.
-`,
-    tasks: [
-      { id: 't1', description: 'Run "ls" in terminal', completed: false },
-      { id: 't2', description: 'Check Python version', completed: false },
-      { id: 't3', description: 'Create hello.py via Assistant', completed: false },
-    ],
-  },
-  {
-    id: 'intro-to-prompting',
-    title: 'Mastering Prompt Engineering',
-    description: 'Learn the fundamentals of communicating with local LLMs.',
+    id: 'pe-1',
+    title: 'Prompt Engineering Fundamentals',
+    description: 'Learn specificity, context, and formatting.',
     track: 'prompt-engineering',
     difficulty: 'beginner',
-    content: `
-# Lesson 2: Communicating with Qwen
-
-Now that your environment is ready, let's talk to the brain: **Qwen 2.5**.
-
-### Objective
-Learn how to structure prompts to get reliable code and explanations.
-
-### Tasks
-1. Go to the **Prompt Playground** tab.
-2. Ask Qwen: "Explain what an LLM is to a 5-year-old."
-3. Try changing the **Temperature** to 1.0 and ask again. Notice the difference?
-4. Ask the AI assistant on the right to create a Python script that calculates Fibonacci numbers.
-
-### Pro Tip
-LLMs are sensitive to how you ask. Being specific about the *format* you want (e.g., "Output only JSON") is a key skill.
-`,
-    tasks: [
-      { id: 'p1', description: 'Run a prompt in Playground', completed: false },
-      { id: 'p2', description: 'Experiment with Temperature', completed: false },
-      { id: 'p3', description: 'Create fibonacci.py', completed: false },
-    ],
-    initialFiles: {
-      'hello_ai.py': 'print("Welcome to AI Engineering!")'
-    }
+    content: '# Prompt Engineering\nMastering the basics of communicating with LLMs.',
+    tasks: [{ id: 'pe1', description: 'Test different temperatures in Playground', completed: false }],
   },
+
+  // --- TRACK: AI CODING & VIBE CODING ---
   {
-    id: 'build-first-agent',
-    title: 'Building Your First AI Agent',
-    description: 'Use Python to interact with your local LLM programmatically.',
-    track: 'agentic-ai',
-    difficulty: 'beginner',
-    content: `
-# Lesson 3: Code + LLM = Magic
-
-In this lesson, you'll write code that talks to your local LLM. This is the foundation of building **AI Agents**.
-
-### Objective
-Create a Python script that sends a prompt to Ollama and prints the response.
-
-### Tasks
-1. Ask the AI Assistant to "Write a Python script that uses the \`requests\` library to talk to Ollama's API".
-2. Run the script and see it in action.
-3. Modify the script to make the AI act like a helpful coding tutor.
-
-### What is an Agent?
-An agent is just code that uses an LLM to make decisions or perform tasks. You're building your first one right now!
-`,
-    tasks: [
-      { id: 'a1', description: 'Generate agent script', completed: false },
-      { id: 'a2', description: 'Run agent script', completed: false },
-      { id: 'a3', description: 'Customize the agent prompt', completed: false },
-    ],
-  },
-  {
-    id: 'vibe-coding-site',
-    title: 'Vibe Coding: Personal Website',
-    description: 'Build a personal website using only AI coding agents.',
+    id: 'vc-website',
+    title: 'Personal Website with AI Digital Twin',
+    description: 'Build your digital home using vibe coding.',
     track: 'ai-coding',
     difficulty: 'beginner',
-    content: `
-# Project: Your Personal Website
-
-In this module, you'll experience **Vibe Coding**. Instead of writing code line-by-line, you'll describe your vision to the AI and refine it until it's perfect.
-
-### Objective
-Build a feature-rich personal website with an integrated AI Digital Twin.
-
-### Tasks
-1. Ask the AI Assistant: "I want to build a personal website with a hero section, an about me section, and a blog. Use Tailwind CSS."
-2. Guide the AI to add a "Chat with my Digital Twin" feature.
-3. Deploy your site locally and view it.
-`,
-    tasks: [
-      { id: 'v1', description: 'Generate website structure', completed: false },
-      { id: 'v2', description: 'Add AI Digital Twin chat', completed: false },
-      { id: 'v3', description: 'View site in browser', completed: false },
-    ],
+    content: '# Project: Personal Website\nUse AI coding agents to build a portfolio.',
+    tasks: [{ id: 'vc1', description: 'Create hero section', completed: false }],
   },
   {
-    id: 'rag-knowledge-assistant',
-    title: 'Build a RAG Knowledge Assistant',
-    description: 'Create an AI that knows your personal documents.',
+    id: 'vc-chatbot',
+    title: 'Simple Chatbot with Vibe Coding',
+    description: 'Create a conversational interface from scratch.',
+    track: 'ai-coding',
+    difficulty: 'beginner',
+    content: '# Project: Simple Chatbot\nBuilding interfaces with natural language.',
+    tasks: [{ id: 'vc2', description: 'Implement message bubbles', completed: false }],
+  },
+  {
+    id: 'vc-kanban',
+    title: 'Kanban Board with AI Assistance',
+    description: 'Build a project management tool.',
+    track: 'ai-coding',
+    difficulty: 'beginner',
+    content: '# Project: Kanban Board\nDrag and drop tasks with AI-generated logic.',
+    tasks: [{ id: 'vc3', description: 'Add board columns', completed: false }],
+  },
+  {
+    id: 'vc-notes',
+    title: 'AI Note-taking App',
+    description: 'Develop a note-taking app using Cursor.',
+    track: 'ai-coding',
+    difficulty: 'beginner',
+    content: '# Project: Note-taking App\nManage your ideas with an AI-powered editor.',
+    tasks: [{ id: 'vc4', description: 'Implement local storage', completed: false }],
+  },
+  {
+    id: 'vc-doc-gen',
+    title: 'AI Document Generator',
+    description: 'Create a document generator using AI workflows.',
+    track: 'ai-coding',
+    difficulty: 'beginner',
+    content: '# Project: Document Generator\nAutomate document creation.',
+    tasks: [{ id: 'vc5', description: 'Generate PDF from prompt', completed: false }],
+  },
+  {
+    id: 'vc-legal',
+    title: 'SaaS Legal Assistant',
+    description: 'Drafts legal documents + PDF download.',
+    track: 'ai-coding',
+    difficulty: 'intermediate',
+    content: '# Project: SaaS Legal Assistant\nComplex document generation SaaS.',
+    tasks: [{ id: 'vc6', description: 'Implement document templates', completed: false }],
+  },
+
+  // --- TRACK: RAG SYSTEMS ---
+  {
+    id: 'rag-personal',
+    title: 'RAG-based Personal Knowledge Assistant',
+    description: 'Chat with your own documents.',
     track: 'rag-systems',
     difficulty: 'intermediate',
-    content: `
-# Project: Personal Knowledge Assistant
-
-Learn how to use **RAG (Retrieval-Augmented Generation)** to make an AI that can answer questions based on your own PDF or Text files.
-
-### Objective
-Develop a production-ready RAG assistant.
-
-### Tasks
-1. Ask the AI to "Write a script that uses LangChain or a simple vector search to read a local document."
-2. Integrate the local LLM to answer questions about that document.
-3. Add a basic automated testing workflow to verify accuracy.
-`,
-    tasks: [
-      { id: 'r1', description: 'Implement document loading', completed: false },
-      { id: 'r2', description: 'Implement vector search', completed: false },
-      { id: 'r3', description: 'Connect LLM for QA', completed: false },
-    ],
+    content: '# Project: RAG Assistant\nConnect AI to your PDFs and notes.',
+    tasks: [{ id: 'r1', description: 'Index local files', completed: false }],
   },
   {
-    id: 'capstone-1-digital-twin',
-    title: 'Capstone 1: AI Digital Twin',
-    description: 'Build a complete AI Digital Twin that represents you professionally.',
+    id: 'rag-company',
+    title: 'RAG Knowledge Worker (Company Expert)',
+    description: 'Enterprise-grade RAG system.',
+    track: 'rag-systems',
+    difficulty: 'advanced',
+    content: '# Project: Company Expert\nHigh-accuracy retrieval for technical docs.',
+    tasks: [{ id: 'r2', description: 'Optimize vector retrieval', completed: false }],
+  },
+
+  // --- TRACK: AGENTIC AI ---
+  {
+    id: 'ag-research',
+    title: 'Multi-Agent System for Research',
+    description: 'Orchestrate agents for deep analysis.',
+    track: 'agentic-ai',
+    difficulty: 'intermediate',
+    content: '# Project: Research Team\nManaging multiple specialized AI workers.',
+    tasks: [{ id: 'a1', description: 'Define agent roles', completed: false }],
+  },
+  {
+    id: 'ag-deal',
+    title: 'Autonomous Deal Spotting System',
+    description: 'Agents that find deals and notify you.',
+    track: 'agentic-ai',
+    difficulty: 'advanced',
+    content: '# Project: Deal Spotter\nReal-world automation with AI agents.',
+    tasks: [{ id: 'a2', description: 'Connect scraping tool', completed: false }],
+  },
+  {
+    id: 'ag-support',
+    title: 'Multi-modal Customer Support Agent',
+    description: 'UI + function calling support.',
+    track: 'agentic-ai',
+    difficulty: 'intermediate',
+    content: '# Project: Support Agent\nHandling diverse customer requests.',
+    tasks: [{ id: 'a3', description: 'Implement function calling', completed: false }],
+  },
+
+  // --- TRACK: SYSTEMS THINKING ---
+  {
+    id: 'st-brochure',
+    title: 'AI-Powered Brochure Generator',
+    description: 'Web scraping + intelligent navigation.',
+    track: 'systems-thinking',
+    difficulty: 'intermediate',
+    content: '# Project: Brochure Generator\nTransforming raw web data into marketing copy.',
+    tasks: [{ id: 's1', description: 'Scrape company website', completed: false }],
+  },
+  {
+    id: 'st-minutes',
+    title: 'Meeting Minutes Generator',
+    description: 'From audio/text to actionable items.',
+    track: 'systems-thinking',
+    difficulty: 'intermediate',
+    content: '# Project: Minutes Generator\nSummarization and task extraction.',
+    tasks: [{ id: 's2', description: 'Extract action items', completed: false }],
+  },
+  {
+    id: 'st-optimizer',
+    title: 'AI Code Optimizer Tool',
+    description: 'Python -> optimized C++ converter (60,000x boost).',
     track: 'systems-thinking',
     difficulty: 'advanced',
-    content: `
-# Capstone: Your AI Digital Twin
+    content: '# Project: Code Optimizer\nArchitecture for extreme performance.',
+    tasks: [{ id: 's3', description: 'Implement C++ generation', completed: false }],
+  },
+  {
+    id: 'st-prediction',
+    title: 'Product Price Prediction',
+    description: 'Using frontier models.',
+    track: 'systems-thinking',
+    difficulty: 'advanced',
+    content: '# Project: Price Prediction\nPredictive modeling with LLMs.',
+    tasks: [{ id: 's4', description: 'Evaluate model accuracy', completed: false }],
+  },
+  {
+    id: 'st-fine-tune',
+    title: 'Fine-tuned Model for Prediction',
+    description: 'Fine-tune an open-source model for specific tasks.',
+    track: 'systems-thinking',
+    difficulty: 'advanced',
+    content: '# Project: Fine-tuning\nLearning QLoRA and model optimization.',
+    tasks: [{ id: 's5', description: 'Fine-tune Qwen 2.5', completed: false }],
+  },
 
-Combine everything you've learned to build a sophisticated AI agent that can represent you, answer questions about your experience, and even schedule meetings.
+  // --- TRACK: MLOPS & CI/CD ---
+  {
+    id: 'ml-terminal-project',
+    title: 'Terminal-based Project Runner',
+    description: 'Build and run a project using terminal commands.',
+    track: 'mlops',
+    difficulty: 'beginner',
+    content: '# Project: Terminal Runner\nMastering the command line for automation.',
+    tasks: [{ id: 'm0', description: 'Run build script in terminal', completed: false }],
+  },
+  {
+    id: 'ml-vc',
+    title: 'Version Control for AI Projects',
+    description: 'Set up Git and collaborative workflows.',
+    track: 'mlops',
+    difficulty: 'beginner',
+    content: '# Project: Version Control\nThe foundation of production engineering.',
+    tasks: [{ id: 'm1', description: 'Initialize git repo', completed: false }],
+  },
+  {
+    id: 'ml-tests',
+    title: 'Automated Testing for AI',
+    description: 'Create basic testing workflows.',
+    track: 'mlops',
+    difficulty: 'intermediate',
+    content: '# Project: Automated Testing\nEnsuring AI outputs stay reliable.',
+    tasks: [{ id: 'm2', description: 'Write first prompt test', completed: false }],
+  },
+  {
+    id: 'ml-deploy',
+    title: 'Deploy to Free Hosting',
+    description: 'Take your AI tool live.',
+    track: 'mlops',
+    difficulty: 'beginner',
+    content: '# Project: Deployment\nMaking your tool accessible to the world.',
+    tasks: [{ id: 'm3', description: 'Link to hosting provider', completed: false }],
+  },
+  {
+    id: 'ml-pipeline',
+    title: 'Basic CI/CD Pipeline',
+    description: 'Automate your deployments.',
+    track: 'mlops',
+    difficulty: 'intermediate',
+    content: '# Project: CI/CD Pipeline\nAutomating the road to production.',
+    tasks: [{ id: 'm4', description: 'Setup GitHub Actions', completed: false }],
+  },
 
-### Tasks
-1. Build the frontend (Vibe Coding).
-2. Implement the knowledge base (RAG).
-3. Deploy as a production-ready tool (MLOps).
-`,
-    tasks: [
-      { id: 'c1-1', description: 'Design Digital Twin Persona', completed: false },
-      { id: 'c1-2', description: 'Implement Multi-modal interface', completed: false },
-      { id: 'c1-3', description: 'Final Capstone Submission', completed: false },
-    ],
+  // --- CAPSTONES ---
+  {
+    id: 'cap-1',
+    title: 'Capstone 1: AI Digital Twin',
+    description: 'Complete representative Digital Twin.',
+    track: 'systems-thinking',
+    difficulty: 'advanced',
+    content: '# Capstone: AI Digital Twin\nYour professional representative.',
+    tasks: [{ id: 'c1', description: 'Final launch', completed: false }],
+  },
+  {
+    id: 'cap-2',
+    title: 'Capstone 2: Autonomous Research Team',
+    description: 'Multi-agent team with terminal usage.',
+    track: 'agentic-ai',
+    difficulty: 'advanced',
+    content: '# Capstone: Research Team\nAutonomous swarm for complex tasks.',
+    tasks: [{ id: 'c2', description: 'Complete orchestration', completed: false }],
+  },
+  {
+    id: 'cap-3',
+    title: 'Capstone 3: Production-Ready RAG Assistant',
+    description: 'With CI/CD deployment.',
+    track: 'mlops',
+    difficulty: 'advanced',
+    content: '# Capstone: Production RAG\nScalable and reliable.',
+    tasks: [{ id: 'c3', description: 'Deploy to production', completed: false }],
+  },
+  {
+    id: 'cap-4',
+    title: 'Capstone 4: AI Coding Agent Team',
+    description: 'Create and maintain software projects.',
+    track: 'ai-coding',
+    difficulty: 'advanced',
+    content: '# Capstone: Coding Agent Team\nBuilding software with swarms.',
+    tasks: [{ id: 'c4', description: 'Implement auto-debug loop', completed: false }],
+  },
+  {
+    id: 'cap-5',
+    title: 'Capstone 5: Full AI-Powered SaaS Product',
+    description: 'Agents, RAG, and automated deployment.',
+    track: 'systems-thinking',
+    difficulty: 'advanced',
+    content: '# Capstone: SaaS Product\nThe ultimate end-to-end project.',
+    tasks: [{ id: 'c5', description: 'Acquire first test user', completed: false }],
+  },
+  {
+    id: 'cap-trading',
+    title: 'Capstone: Real-time Trading Workstation',
+    description: 'Live data + AI Assistant.',
+    track: 'ai-coding',
+    difficulty: 'advanced',
+    content: '# Capstone: Trading Workstation\nComplex real-time AI system.',
+    tasks: [{ id: 'ct', description: 'Integrate market API', completed: false }],
   }
 ];
