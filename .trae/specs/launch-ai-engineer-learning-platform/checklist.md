@@ -1,0 +1,10 @@
+- [x] Curriculum tracks are defined for all requested learning areas with beginner-friendly sequencing
+- [x] Learning modules are specified as hands-on, project-based experiences rather than theory-only lessons
+- [x] Sandbox requirements include editor, file explorer, terminal, one-click run, and safe execution expectations
+- [x] User account and profile requirements cover signup, login, saved projects, learning history, and sandbox persistence
+- [x] Progress tracking requirements cover lessons completed, projects finished, terminal commands learned, and skills gained
+- [x] Personalized recommendation requirements cover learner goals, current skill level, and next-step suggestions
+- [x] Project catalog requirements include AI coding projects, CI/CD projects, and core technical projects from the request
+- [x] Capstone requirements include all five requested major capstone projects with clear purpose
+- [x] Supportive beginner UX requirements cover plain-language explanations, guidance, and recovery from errors
+- [x] Tasks are broken into small, verifiable work items with sensible sequencing and dependencies
