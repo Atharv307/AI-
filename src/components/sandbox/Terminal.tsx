@@ -40,9 +40,11 @@ export function Terminal({ onCommand, output }: TerminalProps) {
         term.writeln('');
         if (currentCommand.trim() && onCommand) {
           onCommand(currentCommand);
+          // Don't write $ immediately, wait for output
+        } else {
+          term.write('$ ');
         }
         currentCommand = '';
-        term.write('$ ');
       } else if (char === '\u007f') { // Backspace
         if (currentCommand.length > 0) {
           currentCommand = currentCommand.slice(0, -1);

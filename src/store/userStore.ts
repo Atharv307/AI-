@@ -14,6 +14,7 @@ interface UserStore {
   addSkill: (skill: string) => void;
   addCommand: (command: string) => void;
   setTargetJob: (job: string) => void;
+  setSkillLevel: (level: 'beginner' | 'intermediate' | 'advanced') => void;
 }
 
 export const useUserStore = create<UserStore>()(
@@ -57,6 +58,12 @@ export const useUserStore = create<UserStore>()(
         progress: {
           ...state.progress,
           targetJob: job
+        }
+      })),
+      setSkillLevel: (level) => set((state) => ({
+        progress: {
+          ...state.progress,
+          skillLevel: level
         }
       })),
     }),

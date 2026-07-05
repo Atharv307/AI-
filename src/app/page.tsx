@@ -17,7 +17,7 @@ import { useUserStore } from '@/store/userStore';
 import { Settings, UserCircle } from 'lucide-react';
 
 export default function WorkspacePage() {
-  const { currentLessonId, setCurrentLesson, progress, setTargetJob } = useUserStore();
+  const { currentLessonId, setCurrentLesson, progress, setTargetJob, setSkillLevel } = useUserStore();
   const [view, setView] = useState<'workspace' | 'dashboard' | 'profile'>('workspace');
 
   const currentLesson = lessons.find(l => l.id === currentLessonId) || lessons[0];
@@ -56,7 +56,7 @@ export default function WorkspacePage() {
   };
 
   return (
-    <div className="flex h-screen w-full bg-background overflow-hidden">
+    <div className="flex h-screen w-full bg-background overflow-hidden text-foreground selection:bg-primary/30">
       {/* Navigation Rail */}
       <div className="w-14 border-r border-border/40 flex flex-col items-center py-4 gap-4 bg-background">
         <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
@@ -134,7 +134,7 @@ export default function WorkspacePage() {
                             ? 'bg-primary/10 border-primary text-primary shadow-[0_0_15px_rgba(var(--primary),0.1)]'
                             : 'bg-card/20 border-border/40 text-muted-foreground hover:border-border hover:bg-card/40'
                         } capitalize`}
-                        onClick={() => useUserStore.setState({ progress: { ...progress, skillLevel: lvl as any } })}
+                        onClick={() => setSkillLevel(lvl as any)}
                       >
                         {lvl}
                       </button>
@@ -204,7 +204,12 @@ export default function WorkspacePage() {
                 variant="primary"
                 className="h-7 text-xs px-3 rounded-md shadow-sm"
                 disabled={!selectedFile}
-                onClick={() => selectedFile && handleRunCommand(`python3 ${selectedFile}`)}
+                onClick={() => {
+                  if (selectedFile) {
+                    const cmd = selectedFile.endsWith('.py') ? `python3 "${selectedFile}"` : `cat "${selectedFile}"`;
+                    handleRunCommand(cmd);
+                  }
+                }}
               >
                 <Play size={12} className="mr-1.5 fill-current" /> Run
               </Button>
