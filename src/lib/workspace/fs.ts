@@ -89,6 +89,28 @@ if __name__ == "__main__":
 `;
     await fs.writeFile(path.join(WORKSPACE_ROOT, 'ollama_client.py'), helperContent, 'utf-8');
     await fs.writeFile(path.join(WORKSPACE_ROOT, 'requirements.txt'), 'requests\n', 'utf-8');
+
+    // Seed templates
+    await fs.writeFile(path.join(WORKSPACE_ROOT, 'PRD_TEMPLATE.md'), `# Project Name: [Title]
+## Overview
+What are we building and why?
+
+## Core Features
+1. [Feature 1]
+2. [Feature 2]
+
+## Success Criteria
+How do we know it works?`, 'utf-8');
+
+    await fs.writeFile(path.join(WORKSPACE_ROOT, 'AGENTS_TEMPLATE.md'), `# AI Agent Architecture
+## Agent Roles
+- **[Agent Name]**: [Responsibility]
+
+## Knowledge Base
+- [Sources of data]
+
+## Tools
+- [Terminal, API, etc]`, 'utf-8');
   }
 }
 

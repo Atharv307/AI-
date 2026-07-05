@@ -4,9 +4,15 @@ export interface Lesson {
   description: string;
   track: TrackId;
   difficulty: 'beginner' | 'intermediate' | 'advanced';
-  content: string; // Markdown
-  tasks: Task[];
+  phases: Phase[];
   initialFiles?: Record<string, string>;
+}
+
+export interface Phase {
+  id: 'theory' | 'planning' | 'documentation' | 'building';
+  title: string;
+  content: string;
+  tasks: Task[];
 }
 
 export type TrackId =

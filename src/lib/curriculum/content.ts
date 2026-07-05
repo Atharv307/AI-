@@ -10,258 +10,471 @@ export const tracks: Track[] = [
 ];
 
 export const lessons: Lesson[] = [
-  // --- TRACK: PROMPT ENGINEERING & LLM BASICS ---
+  // --- TRACK 1: PROMPT ENGINEERING ---
   {
     id: 'pe-1',
-    title: 'Prompt Engineering Fundamentals',
-    description: 'Learn specificity, context, and formatting for non-technical users.',
+    title: 'Zero to Prompt Engineer',
+    description: 'Understand how LLMs think and how to talk to them professionally.',
     track: 'prompt-engineering',
     difficulty: 'beginner',
-    content: `
-# Lesson 1: Talking to the Brain
-
-As an AI Engineer, your primary tool is natural language. You don't need to know Python yet—you just need to know how to explain your vision.
-
-### Building Task:
-1. Open the **Playground** tab.
-2. Tell the AI: "You are a world-class travel agent. Plan a 3-day trip to Tokyo focus on hidden local spots."
-3. Now try: "Plan the same trip but output it as a table with columns: Day, Location, Activity, Why it is special."
-
-### What you learned:
-- **Roles**: Giving the AI a persona improves quality.
-- **Formatting**: Asking for tables/JSON makes data usable.
-`,
-    tasks: [{ id: 'pe1', description: 'Try 3 different personas in Playground', completed: false }],
+    phases: [
+      {
+        id: 'theory',
+        title: 'Conceptual Understanding',
+        content: '# How do LLMs work?\nThink of an LLM like a super-powered autocomplete. It doesn\'t "know" things like humans do; it predicts the next most likely word.\n\n### Key Concepts:\n1. **Tokens**: Small chunks of text LLMs process.\n2. **Context Window**: How much information the AI can remember at once.\n3. **Prompt**: The instruction you give.',
+        tasks: [{ id: 't1', description: 'Explain "Tokens" to the Assistant in your own words', completed: false }]
+      },
+      {
+        id: 'building',
+        title: 'The Build',
+        content: '# Engineering the Prompt\nGo to the **Assistant** and ask it to explain a complex topic (like Quantum Physics) to a 5-year old.',
+        tasks: [{ id: 'b1', description: 'Get a perfect ELI5 response from the Assistant', completed: false }]
+      }
+    ]
+  },
+  {
+    id: 'pe-2',
+    title: 'The Travel Agent Persona',
+    description: 'Learn Persona Engineering to get specific, high-quality results.',
+    track: 'prompt-engineering',
+    difficulty: 'beginner',
+    phases: [
+      {
+        id: 'planning',
+        title: 'Persona Design',
+        content: '# Why Personas?\nWithout a persona, AI is generic. With a persona, it becomes an expert.\n\n### Requirements:\n- Must act as a local expert for Tokyo.\n- Must use "Sushi Master" slang.\n- Must format output as a Markdown table.',
+        tasks: [{ id: 'p1', description: 'Draft a system prompt for the "Sushi Master Tokyo Guide"', completed: false }]
+      },
+      {
+        id: 'building',
+        title: 'The Build',
+        content: '# Test your Persona\nInput your system prompt and ask for a 1-day food tour.',
+        tasks: [{ id: 'b1', description: 'Verify the output is in a Markdown table', completed: false }]
+      }
+    ]
+  },
+  {
+    id: 'pe-3',
+    title: 'Advanced Delimiters & Structured Output',
+    description: 'Control the AI output using XML tags and JSON formatting.',
+    track: 'prompt-engineering',
+    difficulty: 'intermediate',
+    phases: [
+      {
+        id: 'theory',
+        title: 'The Power of Delimiters',
+        content: 'Use `###`, `---`, or `<tag></tag>` to help the AI separate instructions from data.',
+        tasks: [{ id: 't1', description: 'Read about XML-style prompting', completed: false }]
+      },
+      {
+        id: 'building',
+        title: 'Build a JSON Generator',
+        content: 'Prompt the AI to summarize a news article and output the result ONLY in valid JSON.',
+        tasks: [{ id: 'b1', description: 'Generate a JSON object with "title", "summary", and "sentiment" keys', completed: false }]
+      }
+    ]
+  },
+  {
+    id: 'pe-4',
+    title: 'Chain of Thought Reasoning',
+    description: 'Teach the AI to think step-by-step for complex logic.',
+    track: 'prompt-engineering',
+    difficulty: 'intermediate',
+    phases: [
+      {
+        id: 'theory',
+        title: 'Let\'s Think Step by Step',
+        content: 'Asking the AI to "think step by step" reduces hallucinations in math and logic problems.',
+        tasks: [{ id: 't1', description: 'Read about Chain-of-Thought (CoT)', completed: false }]
+      },
+      {
+        id: 'building',
+        title: 'Solve a Logic Puzzle',
+        content: 'Give the Assistant a complex riddle and require it to show its work before giving the answer.',
+        tasks: [{ id: 'b1', description: 'Get a correctly reasoned answer to a logic puzzle', completed: false }]
+      }
+    ]
+  },
+  {
+    id: 'pe-capstone',
+    title: 'Capstone: The Automated PRD Generator',
+    description: 'Build a complex prompt system that turns a "vibe" into a professional Product Requirements Document.',
+    track: 'prompt-engineering',
+    difficulty: 'advanced',
+    phases: [
+      {
+        id: 'documentation',
+        title: 'System Design',
+        content: 'Your prompt needs to handle edge cases, technical stacks, and user stories.',
+        tasks: [{ id: 'd1', description: 'Create a PRD_TEMPLATE.md in your workspace', completed: false }]
+      },
+      {
+        id: 'building',
+        title: 'Final Implementation',
+        content: 'Create a "One-Prompt PRD Engine" that produces 2000+ words of documentation from a simple idea.',
+        tasks: [{ id: 'b1', description: 'Generate a full PRD for a "Uber for Dogs" app', completed: false }]
+      }
+    ]
   },
 
-  // --- TRACK: AI CODING & VIBE CODING (Course 1 Focus) ---
+  // --- TRACK 2: AI CODING ---
   {
-    id: 'vc-website',
-    title: 'Project 1: Personal Website with AI Digital Twin',
-    description: 'Build a feature-rich personal website using only AI coding agents.',
+    id: 'vc-1',
+    title: 'Building a Personal Website',
+    description: 'Use Vibe Coding to build your first site from scratch.',
     track: 'ai-coding',
     difficulty: 'beginner',
-    content: `
-# Project: Your Digital Home
-
-We are going to use **Vibe Coding**. You describe the website, and the AI builds it.
-
-### Your Build Plan:
-1. Click **Initialize Starter Files** below.
-2. Ask the Assistant: "Build me a modern portfolio website using Tailwind CSS. Include a 'Chat with my AI Digital Twin' section."
-3. Refine the Vibe: "Make the colors more Linear-style (dark purple and black)."
-
-### Key Learnings:
-- Vibe Coding workflows
-- Integrating AI into web apps
-`,
-    tasks: [
-      { id: 'vc1-1', description: 'Initialize website structure', completed: false },
-      { id: 'vc1-2', description: 'Add AI Digital Twin chat component', completed: false },
-      { id: 'vc1-3', description: 'View site in terminal using python -m http.server', completed: false }
-    ],
+    phases: [
+      {
+        id: 'planning',
+        title: 'Site Structure',
+        content: 'Plan your Hero section, About me, and Projects list.',
+        tasks: [{ id: 'p1', description: 'Write down your site structure in a plan.txt', completed: false }]
+      },
+      {
+        id: 'building',
+        title: 'The Build',
+        content: 'Use the Assistant: "Build a modern responsive personal website using Tailwind CSS. Save it to index.html."',
+        tasks: [{ id: 'b1', description: 'Generate and view your index.html', completed: false }]
+      }
+    ]
   },
   {
-    id: 'vc-kanban',
-    title: 'Project 2: Kanban Project Management Platform',
-    description: 'Kanban-based platform with a chat interface.',
+    id: 'vc-2',
+    title: 'AI Digital Twin',
+    description: 'Build a custom chatbot that knows everything about you.',
     track: 'ai-coding',
     difficulty: 'beginner',
-    content: `
-# Project: AI Kanban Board
-
-Build a productivity tool where you can manage tasks and talk to an AI assistant about your progress.
-
-### Build Plan:
-1. Initialize the project.
-2. Ask AI: "Build a React-based Kanban board with Drag and Drop."
-3. Add AI: "Integrate a sidebar chat where I can ask 'What should I do next?'"
-`,
-    tasks: [
-      { id: 'vc2-1', description: 'Build board UI with AI', completed: false },
-      { id: 'vc2-2', description: 'Integrate task-aware chatbot', completed: false }
-    ],
+    phases: [
+      {
+        id: 'documentation',
+        title: 'Your Bio',
+        content: 'Create a `bio.md` with your skills, history, and "vibe".',
+        tasks: [{ id: 'd1', description: 'Write your professional bio', completed: false }]
+      },
+      {
+        id: 'building',
+        title: 'Connect the AI',
+        content: 'Create a `twin.py` that uses the `ollama_client.py` to answer questions based on your bio.',
+        tasks: [{ id: 'b1', description: 'Run twin.py and ask it "What is your greatest strength?"', completed: false }]
+      }
+    ]
   },
   {
-    id: 'vc-legal',
-    title: 'Project 3: SaaS Legal Assistant',
-    description: 'Drafts legal documents + PDF download.',
+    id: 'vc-3',
+    title: 'Modern SaaS Landing Page',
+    description: 'React, Tailwind, and Framer Motion integration with AI.',
     track: 'ai-coding',
     difficulty: 'intermediate',
-    content: `
-# Project: Legal SaaS
-
-Learn how to handle complex document generation and file exports.
-
-### Build Plan:
-1. Create a prompt-to-legal-doc engine.
-2. Implement PDF export logic using AI assistance.
-`,
-    tasks: [
-      { id: 'vc3-1', description: 'Implement document templates', completed: false },
-      { id: 'vc3-2', description: 'Add PDF download functionality', completed: false }
-    ],
+    phases: [
+      {
+        id: 'building',
+        title: 'Component Library',
+        content: 'Ask the AI to build a "Linear-inspired" component library for your SaaS.',
+        tasks: [{ id: 'b1', description: 'Create Navbar, Hero, and Feature components', completed: false }]
+      }
+    ]
+  },
+  {
+    id: 'vc-4',
+    title: 'Refactoring Legacy Code',
+    description: 'Use AI to modernize old JavaScript into clean TypeScript.',
+    track: 'ai-coding',
+    difficulty: 'intermediate',
+    phases: [
+      {
+        id: 'theory',
+        title: 'Modern Patterns',
+        content: 'Learn about clean code principles and how AI can spot technical debt.',
+        tasks: [{ id: 't1', description: 'Read about clean code', completed: false }]
+      },
+      {
+        id: 'building',
+        title: 'The Great Refactor',
+        content: 'Paste a "messy" function into the Assistant and ask it to refactor for readability and performance.',
+        tasks: [{ id: 'b1', description: 'Successfully refactor a complex function', completed: false }]
+      }
+    ]
+  },
+  {
+    id: 'vc-capstone',
+    title: 'Capstone: Full-Stack AI Project Manager',
+    description: 'Build an app that tracks your projects and uses AI to suggest next steps.',
+    track: 'ai-coding',
+    difficulty: 'advanced',
+    phases: [
+      {
+        id: 'documentation',
+        title: 'Full Stack PRD',
+        content: 'Define Frontend (Next.js), Backend (Node), and DB (Postgres/Supabase).',
+        tasks: [{ id: 'd1', description: 'Complete a full-stack PRD', completed: false }]
+      },
+      {
+        id: 'building',
+        title: 'The Build',
+        content: 'Work with the Assistant to build the entire stack, file by file.',
+        tasks: [{ id: 'b1', description: 'Launch your project manager app locally', completed: false }]
+      }
+    ]
   },
 
-  // --- TRACK: RAG SYSTEMS & KNOWLEDGE ASSISTANTS (Course 2 Focus) ---
+  // --- TRACK 3: RAG SYSTEMS ---
   {
-    id: 'rag-personal',
-    title: 'Project: RAG-based Personal Knowledge Assistant',
-    description: 'Connect AI to your own personal documents.',
+    id: 'rag-1',
+    title: 'Knowledge Base Chatbot',
+    description: 'Introduction to Retrieval Augmented Generation.',
+    track: 'rag-systems',
+    difficulty: 'beginner',
+    phases: [
+      {
+        id: 'theory',
+        title: 'RAG Fundamentals',
+        content: 'RAG = Retrieval (find relevant info) + Generation (write the answer).',
+        tasks: [{ id: 't1', description: 'Read the RAG workflow overview', completed: false }]
+      },
+      {
+        id: 'building',
+        title: 'The "Search" Build',
+        content: 'Create a simple Python script that searches a text file for a keyword.',
+        tasks: [{ id: 'b1', description: 'Implement keyword-based retrieval', completed: false }]
+      }
+    ]
+  },
+  {
+    id: 'rag-2',
+    title: 'Vector Search Deep-Dive',
+    description: 'Move from keywords to "Meaning" using embeddings.',
     track: 'rag-systems',
     difficulty: 'intermediate',
-    content: `
-# Project: My AI Knowledge Base
-
-Learn how **RAG (Retrieval-Augmented Generation)** works by letting the AI read your private notes.
-
-### Your Build Plan:
-1. Initialize the RAG workspace.
-2. Use \`SimpleVectorStore\` from \`ollama_client.py\` to index your text files.
-3. Chat with the LLM and see it reference your files!
-`,
-    tasks: [
-      { id: 'r1', description: 'Index local text files', completed: false },
-      { id: 'r2', description: 'Run Q&A over indexed documents', completed: false }
-    ],
+    phases: [
+      {
+        id: 'theory',
+        title: 'What are Embeddings?',
+        content: 'Embeddings turn words into numbers (vectors). Similar meanings have similar numbers.',
+        tasks: [{ id: 't1', description: 'Read about Vector Math', completed: false }]
+      },
+      {
+        id: 'building',
+        title: 'Vector Store Setup',
+        content: 'Use `SimpleVectorStore` from `ollama_client.py` to index 10 sentences.',
+        tasks: [{ id: 'b1', description: 'Successfully perform a semantic search', completed: false }]
+      }
+    ]
   },
   {
-    id: 'rag-company',
-    title: 'Project: RAG Knowledge Worker (Company Expert)',
-    description: 'High-accuracy expert for technical documentation.',
+    id: 'rag-3',
+    title: 'PDF Analyzer',
+    description: 'Extract and chat with data from complex PDF documents.',
+    track: 'rag-systems',
+    difficulty: 'intermediate',
+    phases: [
+      {
+        id: 'building',
+        title: 'The Parser',
+        content: 'Write a script to parse text from a PDF and feed it into your RAG system.',
+        tasks: [{ id: 'b1', description: 'Chat with a 10-page PDF document', completed: false }]
+      }
+    ]
+  },
+  {
+    id: 'rag-capstone',
+    title: 'Capstone: Personal Second Brain AI',
+    description: 'Build a system that syncs with your notes and provides intelligent insights.',
     track: 'rag-systems',
     difficulty: 'advanced',
-    content: `
-# Project: The Company Expert
-
-Scale up your RAG system to handle thousands of technical documents with high accuracy.
-`,
-    tasks: [{ id: 'r3', description: 'Optimize retrieval accuracy to >90%', completed: false }],
+    phases: [
+      {
+        id: 'planning',
+        title: 'Architecture',
+        content: 'Design a system that handles hundreds of documents efficiently.',
+        tasks: [{ id: 'p1', description: 'Create an architecture diagram for your Second Brain', completed: false }]
+      },
+      {
+        id: 'building',
+        title: 'Final Build',
+        content: 'Build the full RAG pipeline with hybrid search and re-ranking.',
+        tasks: [{ id: 'b1', description: 'Demonstrate the AI recalling a specific note from 1 month ago', completed: false }]
+      }
+    ]
   },
 
-  // --- TRACK: AGENTIC AI & MULTI-AGENT SYSTEMS ---
+  // --- TRACK 4: AGENTIC AI ---
   {
-    id: 'ag-research',
-    title: 'Project: Multi-Agent System for Research',
-    description: 'Orchestrate multiple agents to perform deep research.',
+    id: 'ag-1',
+    title: 'Autonomous Web Researcher',
+    description: 'Build an agent that can browse the web to find information.',
     track: 'agentic-ai',
     difficulty: 'intermediate',
-    content: `
-# Project: Autonomous Research Team
-
-Build a team:
-- **Researcher**: Scrapes data.
-- **Analyst**: Finds insights.
-- **Writer**: Compiles the report.
-`,
-    tasks: [
-      { id: 'a1', description: 'Define 3 specialized agent roles', completed: false },
-      { id: 'a2', description: 'Implement autonomous handoff loop', completed: false }
-    ],
+    phases: [
+      {
+        id: 'theory',
+        title: 'Agent Loops',
+        content: 'Agents use a "Reason -> Act -> Observe" loop to complete tasks.',
+        tasks: [{ id: 't1', description: 'Read about the ReAct pattern', completed: false }]
+      },
+      {
+        id: 'building',
+        title: 'The Researcher',
+        content: 'Create a script that uses a search tool to find the latest AI news.',
+        tasks: [{ id: 'b1', description: 'Have your agent summarize 3 news articles', completed: false }]
+      }
+    ]
   },
   {
-    id: 'ag-support',
-    title: 'Project: Multi-modal Customer Support Agent',
-    description: 'Agent with UI + function calling capability.',
+    id: 'ag-2',
+    title: 'Multi-Agent Debate System',
+    description: 'Watch two AIs argue to find the truth.',
     track: 'agentic-ai',
     difficulty: 'intermediate',
-    content: '# Project: Support Agent\nBuild an agent that can actually "click buttons" and "check databases" to help users.',
-    tasks: [{ id: 'a4', description: 'Implement function calling for DB lookups', completed: false }],
+    phases: [
+      {
+        id: 'building',
+        title: 'The Debate',
+        content: 'Set up two agents: "The Optimist" and "The Skeptic". Give them a topic like "The future of AGI".',
+        tasks: [{ id: 'b1', description: 'Run a 5-turn debate between your agents', completed: false }]
+      }
+    ]
+  },
+  {
+    id: 'ag-3',
+    title: 'AI Customer Support Agent',
+    description: 'Give your AI "Tools" to look up order status and handle refunds.',
+    track: 'agentic-ai',
+    difficulty: 'intermediate',
+    phases: [
+      {
+        id: 'theory',
+        title: 'Tool Use (Function Calling)',
+        content: 'How AIs use external APIs to get real-world work done.',
+        tasks: [{ id: 't1', description: 'Read about Tool Definition', completed: false }]
+      },
+      {
+        id: 'building',
+        title: 'The Support Bot',
+        content: 'Create an agent that can "cancel" a fake order in a local JSON database.',
+        tasks: [{ id: 'b1', description: 'Successfully handle a cancellation request using a tool', completed: false }]
+      }
+    ]
+  },
+  {
+    id: 'ag-capstone',
+    title: 'Capstone: The AI Coding Agency',
+    description: 'Build a team of agents (Manager, Coder, Reviewer) that builds apps autonomously.',
+    track: 'agentic-ai',
+    difficulty: 'advanced',
+    phases: [
+      {
+        id: 'documentation',
+        title: 'Agent Orchestration',
+        content: 'Design how your agents communicate with each other.',
+        tasks: [{ id: 'd1', description: 'Write an "Agent Hand-off" protocol', completed: false }]
+      },
+      {
+        id: 'building',
+        title: 'The Full Build',
+        content: 'Build the agency and have them generate a "Todo List" app together.',
+        tasks: [{ id: 'b1', description: 'Review the code generated by your autonomous team', completed: false }]
+      }
+    ]
   },
 
-  // --- TRACK: SOFTWARE SYSTEMS THINKING & ARCHITECTURE ---
+  // --- TRACK 5: SYSTEMS THINKING ---
   {
-    id: 'st-brochure',
-    title: 'Project: AI-Powered Brochure Generator',
-    description: 'Web scraping + intelligent navigation.',
+    id: 'st-1',
+    title: 'Architecting for Scale',
+    description: 'Learn to design AI apps that don\'t break.',
     track: 'systems-thinking',
     difficulty: 'intermediate',
-    content: '# Project: Brochure Generator\nTransform any company website into a marketing brochure using AI.',
-    tasks: [{ id: 's1', description: 'Implement web scraper with AI cleaning', completed: false }],
+    phases: [
+      {
+        id: 'theory',
+        title: 'Reliability & Latency',
+        content: 'How to handle slow AI responses and server timeouts.',
+        tasks: [{ id: 't1', description: 'Read about Async AI processing', completed: false }]
+      }
+    ]
   },
   {
-    id: 'st-optimizer',
-    title: 'Project: Python to C++ Code Optimizer',
-    description: 'Architect a 60,000x performance boost tool.',
+    id: 'st-2',
+    title: 'Database Design with AI',
+    description: 'SQL vs NoSQL for AI applications.',
     track: 'systems-thinking',
-    difficulty: 'advanced',
-    content: '# Project: Extreme Optimizer\nUse LLMs to rewrite slow Python logic into lightning-fast C++.',
-    tasks: [{ id: 's2', description: 'Generate and compile optimized C++ code', completed: false }],
+    difficulty: 'intermediate',
+    phases: [
+      {
+        id: 'building',
+        title: 'The DB Build',
+        content: 'Use AI to generate a complex database schema for a social media app.',
+        tasks: [{ id: 'b1', description: 'Create a schema.sql file', completed: false }]
+      }
+    ]
   },
   {
-    id: 'st-prediction',
-    title: 'Project: Product Price Prediction',
-    description: 'Predict prices using frontier and fine-tuned models.',
+    id: 'st-capstone',
+    title: 'Capstone: Distributed AI System Design',
+    description: 'Design a system that uses multiple models (local and cloud) for cost-efficiency.',
     track: 'systems-thinking',
     difficulty: 'advanced',
-    content: '# Project: Price AI\nBuild a model that understands market trends.',
-    tasks: [{ id: 's3', description: 'Train a simple price regressor with LLM insights', completed: false }],
+    phases: [
+      {
+        id: 'planning',
+        title: 'Model Routing',
+        content: 'Determine when to use a cheap local model vs an expensive cloud model.',
+        tasks: [{ id: 'p1', description: 'Write a routing logic plan', completed: false }]
+      }
+    ]
   },
 
-  // --- TRACK: MLOPS, CI/CD & PRODUCTION ---
+  // --- TRACK 6: MLOPS ---
   {
-    id: 'ml-pipeline',
-    title: 'Project: Basic CI/CD Pipeline for AI',
-    description: 'Automate testing and deployment of your agents.',
+    id: 'ml-1',
+    title: 'LLM Evaluation & Testing',
+    description: 'How do you know if your AI is actually good?',
     track: 'mlops',
     difficulty: 'intermediate',
-    content: '# Project: AI Pipeline\nLearn to deploy your AI apps automatically when you save code.',
-    tasks: [{ id: 'm1', description: 'Configure automated testing workflow', completed: false }],
-  },
-
-  // --- 5 MAJOR CAPSTONES ---
-  {
-    id: 'cap-1',
-    title: 'Capstone 1: Complete AI Digital Twin',
-    description: 'Build a comprehensive AI twin representing you professionally.',
-    track: 'systems-thinking',
-    difficulty: 'advanced',
-    content: '# Capstone: Your AI Twin\nEverything you learned in Track 2 & 5 combined.',
-    tasks: [{ id: 'c1', description: 'Final launch of Digital Twin', completed: false }],
+    phases: [
+      {
+        id: 'theory',
+        title: 'The Eval Framework',
+        content: 'Learn about ROUGE, BLEU, and LLM-as-a-judge.',
+        tasks: [{ id: 't1', description: 'Read about AI Evaluation metrics', completed: false }]
+      }
+    ]
   },
   {
-    id: 'cap-2',
-    title: 'Capstone 2: Autonomous Multi-Agent Research Team',
-    description: 'With tools and terminal usage.',
-    track: 'agentic-ai',
-    difficulty: 'advanced',
-    content: '# Capstone: Research Swarm\nAgents that can browse the web and write files autonomously.',
-    tasks: [{ id: 'c2', description: 'Complete research team system', completed: false }],
-  },
-  {
-    id: 'cap-3',
-    title: 'Capstone 3: Production-Ready RAG Assistant',
-    description: 'With CI/CD deployment.',
+    id: 'ml-2',
+    title: 'Deploying Ollama to Production',
+    description: 'Dockerize and host your own AI brain.',
     track: 'mlops',
     difficulty: 'advanced',
-    content: '# Capstone: Professional RAG\nScalable, tested, and live in the cloud.',
-    tasks: [{ id: 'c3', description: 'Deploy RAG with automated testing', completed: false }],
+    phases: [
+      {
+        id: 'building',
+        title: 'Docker Build',
+        content: 'Create a Dockerfile that starts an Ollama server and pre-loads a model.',
+        tasks: [{ id: 'b1', description: 'Successfully build the Ollama Docker image', completed: false }]
+      }
+    ]
   },
   {
-    id: 'cap-4',
-    title: 'Capstone 4: AI Coding Agent Team',
-    description: 'Create and maintain software projects automatically.',
-    track: 'ai-coding',
+    id: 'ml-capstone',
+    title: 'Capstone: The Production-Ready AI Startup',
+    description: 'From zero to a monitored, scalable, and tested AI SaaS.',
+    track: 'mlops',
     difficulty: 'advanced',
-    content: '# Capstone: Auto-Dev Team\nBuild a team of agents that can write a whole app from a single prompt.',
-    tasks: [{ id: 'c4', description: 'Complete auto-dev system', completed: false }],
-  },
-  {
-    id: 'cap-5',
-    title: 'Capstone 5: Full AI-Powered SaaS Product',
-    description: 'Prompt engineering, agents, RAG, and automated deployment.',
-    track: 'systems-thinking',
-    difficulty: 'advanced',
-    content: '# Capstone: The AI SaaS\nThe ultimate challenge. Build a real business with AI.',
-    tasks: [{ id: 'c5', description: 'Acquire first test user for your SaaS', completed: false }],
-  },
-  {
-    id: 'cap-trading',
-    title: 'Capstone: Real-time Trading Workstation',
-    description: 'Live market data + AI Assistant.',
-    track: 'ai-coding',
-    difficulty: 'advanced',
-    content: '# Capstone: Trading AI\nComplex real-time system with live data feeds.',
-    tasks: [{ id: 'ct', description: 'Integrate market API and AI trading logic', completed: false }],
+    phases: [
+      {
+        id: 'documentation',
+        title: 'Production Roadmap',
+        content: 'Plan CI/CD, Monitoring, and User Authentication.',
+        tasks: [{ id: 'd1', description: 'Finalize your Startup Launch PRD', completed: false }]
+      },
+      {
+        id: 'building',
+        title: 'The Launch',
+        content: 'Deploy your final project and verify monitoring is working.',
+        tasks: [{ id: 'b1', description: 'Confirm your app is live and reachable', completed: false }]
+      }
+    ]
   }
 ];

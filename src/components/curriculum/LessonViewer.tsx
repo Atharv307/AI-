@@ -17,8 +17,11 @@ interface LessonViewerProps {
 export function LessonViewer({ lesson }: LessonViewerProps) {
   const { taskStatus, toggleTask, completeLesson, progress } = useUserStore();
   const [isInitializing, setIsInitializing] = React.useState(false);
+  const [activePhaseIndex, setActivePhaseIndex] = React.useState(0);
 
-  const allTasksDone = lesson.tasks.every(t => taskStatus[t.id]);
+  const currentPhase = lesson.phases[activePhaseIndex];
+  const allTasksDoneInPhase = currentPhase.tasks.every(t => taskStatus[t.id]);
+  const isLastPhase = activePhaseIndex === lesson.phases.length - 1;
   const isCompleted = progress.completedLessons.includes(lesson.id);
 
   const handleInitialize = async () => {
@@ -43,55 +46,83 @@ export function LessonViewer({ lesson }: LessonViewerProps) {
 
   return (
     <div className="flex flex-col h-full overflow-y-auto p-6 space-y-6">
+      {/* Workflow Stepper */}
+      <div className="flex items-center gap-1 mb-2">
+        {lesson.phases.map((phase, idx) => (
+          <div
+            key={phase.id}
+            className={`h-1 flex-1 rounded-full transition-colors ${
+              idx <= activePhaseIndex ? 'bg-primary' : 'bg-muted'
+            }`}
+          />
+        ))}
+      </div>
+
       <div className="flex items-center justify-between">
-        <div className="prose dark:prose-invert max-w-none flex-1">
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
-            {lesson.content}
-          </ReactMarkdown>
+        <div className="space-y-1">
+          <span className="text-[10px] font-bold uppercase tracking-widest text-primary">
+            Phase {activePhaseIndex + 1}: {currentPhase.id}
+          </span>
+          <h2 className="text-xl font-semibold tracking-tight">{currentPhase.title}</h2>
         </div>
       </div>
 
-      <Button
-        variant="outline"
-        className="w-full border-dashed"
-        disabled={isInitializing}
-        onClick={handleInitialize}
-      >
-        {isInitializing ? 'Initializing Project...' : 'Initialize Starter Files'}
-      </Button>
+      <div className="prose dark:prose-invert max-w-none prose-sm">
+        <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          {currentPhase.content}
+        </ReactMarkdown>
+      </div>
 
-      <Card>
-        <CardHeader>
-          <CardTitle className="text-lg">Tasks</CardTitle>
+      {currentPhase.id === 'building' && (
+        <Button
+          variant="outline"
+          className="w-full border-dashed h-9 text-xs"
+          disabled={isInitializing}
+          onClick={handleInitialize}
+        >
+          {isInitializing ? 'Initializing Project...' : 'Initialize Starter Files'}
+        </Button>
+      )}
+
+      <Card className="bg-muted/30 border-border/40">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-xs font-bold uppercase tracking-wider text-muted-foreground">Requirements</CardTitle>
         </CardHeader>
         <CardContent className="space-y-4">
-          {lesson.tasks.map((task) => (
+          {currentPhase.tasks.map((task) => (
             <div key={task.id} className="flex items-start space-x-3">
               <Checkbox
                 id={task.id}
                 checked={taskStatus[task.id] || false}
                 onCheckedChange={() => toggleTask(task.id)}
+                className="mt-0.5"
               />
               <div className="grid gap-1.5 leading-none">
                 <label
                   htmlFor={task.id}
-                  className="text-sm font-medium leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70"
+                  className="text-sm font-medium leading-none"
                 >
                   {task.description}
                 </label>
-                {task.hint && (
-                  <p className="text-xs text-muted-foreground">{task.hint}</p>
-                )}
               </div>
             </div>
           ))}
 
-          {allTasksDone && !isCompleted && (
+          {allTasksDoneInPhase && !isLastPhase && (
             <Button
-              className="w-full mt-4"
+              className="w-full mt-4 h-9 font-semibold"
+              onClick={() => setActivePhaseIndex(prev => prev + 1)}
+            >
+              Next Phase →
+            </Button>
+          )}
+
+          {allTasksDoneInPhase && isLastPhase && !isCompleted && (
+            <Button
+              className="w-full mt-4 h-9 font-semibold"
               onClick={() => completeLesson(lesson.id)}
             >
-              Complete Lesson
+              Finish Lesson & Project
             </Button>
           )}
           {isCompleted && (
