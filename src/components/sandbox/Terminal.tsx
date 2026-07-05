@@ -7,7 +7,7 @@ import '@xterm/xterm/css/xterm.css';
 
 interface TerminalProps {
   onCommand?: (command: string) => void;
-  output?: string;
+  output?: { text: string; id: number };
 }
 
 export function Terminal({ onCommand, output }: TerminalProps) {
@@ -62,8 +62,8 @@ export function Terminal({ onCommand, output }: TerminalProps) {
   }, [onCommand]);
 
   useEffect(() => {
-    if (output && xtermRef.current) {
-      const lines = output.split('\n');
+    if (output?.text && xtermRef.current) {
+      const lines = output.text.split('\n');
       lines.forEach(line => xtermRef.current?.writeln(line));
       xtermRef.current.write('$ ');
     }

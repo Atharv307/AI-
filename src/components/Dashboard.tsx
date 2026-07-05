@@ -8,7 +8,11 @@ import { Badge } from '@/components/ui/badge';
 import { useUserStore } from '@/store/userStore';
 import { getRecommendations } from '@/lib/curriculum/recommendations';
 
-export function Dashboard() {
+interface DashboardProps {
+  onLessonSelect?: (lessonId: string) => void;
+}
+
+export function Dashboard({ onLessonSelect }: DashboardProps) {
   const { progress } = useUserStore();
   const recommendations = getRecommendations(progress);
 
@@ -60,7 +64,13 @@ export function Dashboard() {
           <CardContent className="space-y-4">
             {recommendations.length > 0 ? (
               recommendations.map(lesson => (
-                <div key={lesson.id} className="p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors">
+                <div
+                  key={lesson.id}
+                  className="p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors"
+                  onClick={() => {
+                    if (onLessonSelect) onLessonSelect(lesson.id);
+                  }}
+                >
                   <div className="text-xs font-semibold uppercase text-muted-foreground mb-1">{lesson.track}</div>
                   <div className="text-sm font-medium">{lesson.title}</div>
                   <div className="text-xs text-muted-foreground line-clamp-1">{lesson.description}</div>

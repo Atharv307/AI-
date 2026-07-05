@@ -6,7 +6,11 @@ import { UserProgress } from '@/types';
 
 interface UserStore {
   progress: UserProgress;
+  currentLessonId: string;
+  taskStatus: Record<string, boolean>;
   completeLesson: (lessonId: string) => void;
+  setCurrentLesson: (lessonId: string) => void;
+  toggleTask: (taskId: string) => void;
   addSkill: (skill: string) => void;
   addCommand: (command: string) => void;
   setTargetJob: (job: string) => void;
@@ -22,6 +26,15 @@ export const useUserStore = create<UserStore>()(
         commandsMastered: [],
         skillLevel: 'beginner',
       },
+      currentLessonId: 'pe-1',
+      taskStatus: {},
+      setCurrentLesson: (lessonId) => set({ currentLessonId: lessonId }),
+      toggleTask: (taskId) => set((state) => ({
+        taskStatus: {
+          ...state.taskStatus,
+          [taskId]: !state.taskStatus[taskId]
+        }
+      })),
       completeLesson: (lessonId) => set((state) => ({
         progress: {
           ...state.progress,

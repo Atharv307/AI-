@@ -23,6 +23,13 @@ export function AIAssistant({ onActionExecute }: AIAssistantProps) {
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const [isOllamaMissing, setIsOllamaMissing] = useState(false);
+
+  useEffect(() => {
+    fetch('/api/llm-status')
+      .then(res => res.json())
+      .then(data => setIsOllamaMissing(!data.running));
+  }, []);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const messagesEndRef = useRef<HTMLDivElement>(null);
@@ -73,11 +80,20 @@ export function AIAssistant({ onActionExecute }: AIAssistantProps) {
 
   return (
     <div className="flex flex-col h-full border-l">
-      <div className="p-4 border-b bg-muted/50 flex items-center justify-between">
-        <h3 className="font-semibold flex items-center gap-2">
-          <Bot size={18} /> AI Assistant
-        </h3>
-        <Badge variant="outline" className="text-xs">Qwen 2.5</Badge>
+      <div className="p-4 border-b bg-muted/50 flex flex-col gap-2">
+        <div className="flex items-center justify-between">
+          <h3 className="font-semibold flex items-center gap-2">
+            <Bot size={18} /> AI Assistant
+          </h3>
+          <Badge variant={isOllamaMissing ? "destructive" : "outline"} className="text-xs">
+            {isOllamaMissing ? "Ollama Offline" : "Qwen 2.5"}
+          </Badge>
+        </div>
+        {isOllamaMissing && (
+          <p className="text-[10px] text-destructive font-medium bg-destructive/10 p-2 rounded">
+            Local LLM not detected. Please start Ollama to use the assistant.
+          </p>
+        )}
       </div>
 
       <ScrollArea className="flex-1 p-4">

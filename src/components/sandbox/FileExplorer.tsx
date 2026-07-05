@@ -11,9 +11,10 @@ interface FileEntry {
 
 interface FileExplorerProps {
   onFileSelect: (path: string) => void;
+  refreshKey?: number;
 }
 
-export function FileExplorer({ onFileSelect }: FileExplorerProps) {
+export function FileExplorer({ onFileSelect, refreshKey }: FileExplorerProps) {
   const [files, setFiles] = useState<FileEntry[]>([]);
 
   const refreshFiles = async () => {
@@ -28,7 +29,7 @@ export function FileExplorer({ onFileSelect }: FileExplorerProps) {
 
   useEffect(() => {
     refreshFiles();
-  }, []);
+  }, [refreshKey]);
 
   return (
     <div className="p-4 bg-muted/30 h-full border-r">

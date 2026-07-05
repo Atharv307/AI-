@@ -12,13 +12,17 @@ import { AIAssistant } from '@/components/AIAssistant';
 import { PromptPlayground } from '@/components/PromptPlayground';
 import { Dashboard } from '@/components/Dashboard';
 import { lessons } from '@/lib/curriculum/content';
+import { useUserStore } from '@/store/userStore';
 
 export default function WorkspacePage() {
+  const { currentLessonId, setCurrentLesson } = useUserStore();
   const [view, setView] = useState<'workspace' | 'dashboard'>('workspace');
-  const [currentLesson] = useState(lessons[0]);
+
+  const currentLesson = lessons.find(l => l.id === currentLessonId) || lessons[0];
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
   const [fileContent, setFileContent] = useState('');
   const [terminalOutput, setTerminalOutput] = useState({ text: '', id: 0 });
+  const [refreshFilesKey, setRefreshFilesKey] = useState(0);
 
   const handleFileSelect = async (path: string) => {
     try {
@@ -73,7 +77,10 @@ export default function WorkspacePage() {
 
       {view === 'dashboard' ? (
         <div className="flex-1 overflow-auto">
-          <Dashboard />
+          <Dashboard onLessonSelect={(lessonId) => {
+            setCurrentLesson(lessonId);
+            setView('workspace');
+          }} />
         </div>
       ) : (
         <>
@@ -94,7 +101,10 @@ export default function WorkspacePage() {
             <LessonViewer lesson={currentLesson} />
           </TabsContent>
           <TabsContent value="files" className="flex-1 m-0">
-            <FileExplorer onFileSelect={handleFileSelect} />
+            <FileExplorer
+              onFileSelect={handleFileSelect}
+              refreshKey={refreshFilesKey}
+            />
           </TabsContent>
         </Tabs>
       </div>
@@ -141,7 +151,7 @@ export default function WorkspacePage() {
                 <span className="text-sm font-medium">Terminal</span>
               </div>
               <div className="flex-1 bg-[#1e1e1e] rounded-md overflow-hidden">
-                <Terminal onCommand={handleRunCommand} output={terminalOutput.text} />
+                <Terminal onCommand={handleRunCommand} output={terminalOutput} />
               </div>
             </div>
           </TabsContent>
@@ -165,7 +175,7 @@ export default function WorkspacePage() {
                 content: action.parameters.content
               })
             });
-            // Refresh file list if needed (omitted for brevity)
+            setRefreshFilesKey(k => k + 1);
           } else if (action.action === 'run_command') {
             await handleRunCommand(action.parameters.command);
           }

@@ -10,6 +10,15 @@ export interface ChatResponse {
   done: boolean;
 }
 
+export async function isOllamaRunning() {
+  try {
+    const response = await fetch(`${OLLAMA_URL}/api/tags`);
+    return response.ok;
+  } catch {
+    return false;
+  }
+}
+
 export async function chat(messages: Message[], model: string = 'qwen2.5:1.5b') {
   try {
     const response = await fetch(`${OLLAMA_URL}/api/chat`, {
