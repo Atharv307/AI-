@@ -10,44 +10,39 @@ echo.
 :: Check for Node.js
 where node >nul 2>nul
 if %ERRORLEVEL% neq 0 (
-    echo [ERROR] Node.js is not installed. Please install it from https://nodejs.org/
-    pause
-    exit /b 1
-)
-
-:: Check for npm
-where npm >nul 2>nul
-if %ERRORLEVEL% neq 0 (
-    echo [ERROR] npm is not installed.
+    echo [ERROR] Node.js is required but not found.
+    echo Please install it from https://nodejs.org/ (LTS version recommended).
     pause
     exit /b 1
 )
 
 :: Install dependencies if node_modules is missing
 if not exist "node_modules\" (
-    echo [INFO] node_modules not found. Installing dependencies...
+    echo [INFO] node_modules not found. Initializing platform (this may take a few minutes)...
     call npm install
-    if !ERRORLEVEL! neq 0 (
-        echo [ERROR] npm install failed.
-        pause
-        exit /b 1
-    )
 )
 
-:: Check for Ollama (optional but recommended)
+:: Check for Build
+if not exist ".next\" (
+    echo [INFO] First run detected. Building the platform for maximum performance...
+    call npm run build
+)
+
+:: Check for Ollama (optional)
 where ollama >nul 2>nul
 if %ERRORLEVEL% neq 0 (
-    echo [WARNING] Ollama is not detected.
-    echo Please install it from https://ollama.com/ for the Assistant to work.
+    echo [NOTICE] Ollama not found. The AI Assistant will run in 'Mock Mode'.
+    echo To unlock full AI power, install Ollama from https://ollama.com/
     echo.
-) else (
-    echo [INFO] Ollama detected. Ensuring qwen2.5:1.5b is available...
-    ollama run qwen2.5:1.5b "Hello" >nul 2>nul
 )
 
-echo [SUCCESS] Starting the platform...
+echo [SUCCESS] Platform is ready!
 echo Opening http://localhost:3000
+
+:: Open browser
 start http://localhost:3000
 
-npm run dev
+:: Start the optimized production server
+echo [INFO] Running in PRODUCTION mode for speed.
+npm start
 pause

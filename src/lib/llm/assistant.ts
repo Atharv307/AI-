@@ -1,4 +1,4 @@
-import { chat } from './ollama';
+import { isOllamaRunning, chat, Message, ChatResponse } from './ollama';
 
 export interface Action {
   type: 'write_file' | 'run_command' | 'read_file' | 'list_files';
@@ -51,33 +51,74 @@ You can perform the following actions by outputting a JSON block:
 Always explain what you are doing in plain language before or after the JSON block.
 Keep your explanations beginner-friendly.`;
 
+const MOCK_RESPONSES: Record<string, string> = {
+  "hello": "Hello! I'm your AI guide. It looks like Ollama isn't running locally right now, so I'm operating in 'Offline Mode'. I can still help you with concepts, but my ability to generate complex code is limited. Once you start Ollama, I'll be much more powerful!",
+  "prd": "Creating a PRD (Product Requirements Document) is the first step of a great engineer! I've created a template for you in the workspace.",
+  "plan": "Planning is 80% of the work. What are you thinking of building? I can help you structure your thoughts.",
+};
+
+async function getMockResponse(userMessage: string): Promise<{ text: string, actions: any[] }> {
+  const lowerMsg = userMessage.toLowerCase();
+  let text = "I'm currently in Offline Mode because Ollama is not detected on your system. Please start Ollama to enable my full intelligence!";
+  const actions: any[] = [];
+
+  if (lowerMsg.includes("hello") || lowerMsg.includes("hi")) {
+    text = MOCK_RESPONSES["hello"];
+  } else if (lowerMsg.includes("prd") || lowerMsg.includes("document")) {
+    text = MOCK_RESPONSES["prd"];
+    actions.push({
+      action: "write_file",
+      parameters: {
+        path: "PRD.md",
+        content: "# Product Requirements Document\n\n## Overview\n[Describe the project]\n\n## Core Features\n- Feature 1\n- Feature 2\n\n## Tech Stack\n- Python / Ollama"
+      }
+    });
+  } else if (lowerMsg.includes("plan")) {
+    text = MOCK_RESPONSES["plan"];
+  }
+
+  return { text, actions };
+}
+
 export async function processAIAssistantRequest(userMessage: string, history: any[]) {
+  // Check if Ollama is running
+  const ollamaActive = await isOllamaRunning();
+
+  if (!ollamaActive) {
+    return await getMockResponse(userMessage);
+  }
+
   const messages = [
     { role: 'system', content: SYSTEM_PROMPT },
     ...history,
     { role: 'user', content: userMessage }
   ];
 
-  const response = await chat(messages as any);
-  const content = response.message.content;
+  try {
+    const response = await chat(messages as any);
+    const content = response.message.content;
 
-  // Robust extraction of all JSON actions from response
-  const jsonMatches = content.matchAll(/\{[\s\S]*?"action"[\s\S]*?\}/g);
-  const actions: any[] = [];
-  let cleanText = content;
+    // Robust extraction of all JSON actions from response
+    const jsonMatches = content.matchAll(/\{[\s\S]*?"action"[\s\S]*?\}/g);
+    const actions: any[] = [];
+    let cleanText = content;
 
-  for (const match of jsonMatches) {
-    try {
-      const action = JSON.parse(match[0]);
-      actions.push(action);
-      cleanText = cleanText.replace(match[0], '');
-    } catch (e) {
-      console.error('Failed to parse AI action:', e);
+    for (const match of jsonMatches) {
+      try {
+        const action = JSON.parse(match[0]);
+        actions.push(action);
+        cleanText = cleanText.replace(match[0], '');
+      } catch (e) {
+        console.error('Failed to parse AI action:', e);
+      }
     }
-  }
 
-  return {
-    text: cleanText.trim(),
-    actions
-  };
+    return {
+      text: cleanText.trim(),
+      actions
+    };
+  } catch (error) {
+    console.error('Ollama chat failed, falling back to mock:', error);
+    return await getMockResponse(userMessage);
+  }
 }
