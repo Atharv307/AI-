@@ -79,43 +79,43 @@ export function AIAssistant({ onActionExecute }: AIAssistantProps) {
   };
 
   return (
-    <div className="flex flex-col h-full border-l">
-      <div className="p-4 border-b bg-muted/50 flex flex-col gap-2">
+    <div className="flex flex-col h-full border-l border-border/40 bg-card/20">
+      <div className="p-4 border-b border-border/40 bg-background/50 backdrop-blur flex flex-col gap-2">
         <div className="flex items-center justify-between">
-          <h3 className="font-semibold flex items-center gap-2">
-            <Bot size={18} /> AI Assistant
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground flex items-center gap-2">
+            <Bot size={14} /> Assistant
           </h3>
-          <Badge variant={isOllamaMissing ? "destructive" : "outline"} className="text-xs">
+          <Badge variant={isOllamaMissing ? "destructive" : "secondary"} className="text-[10px] h-5">
             {isOllamaMissing ? "Ollama Offline" : "Qwen 2.5"}
           </Badge>
         </div>
         {isOllamaMissing && (
-          <p className="text-[10px] text-destructive font-medium bg-destructive/10 p-2 rounded">
-            Local LLM not detected. Please start Ollama to use the assistant.
+          <p className="text-[10px] text-destructive font-medium bg-destructive/5 p-2 rounded border border-destructive/20">
+            Local LLM not detected. Please start Ollama.
           </p>
         )}
       </div>
 
-      <ScrollArea className="flex-1 p-4">
+      <ScrollArea className="flex-1 px-4 py-6">
         <div className="space-y-4">
           {messages.map((m, i) => (
-            <div key={i} className={`flex ${m.role === 'user' ? 'justify-end' : 'justify-start'}`}>
-              <div className={`max-w-[85%] rounded-lg p-3 ${
-                m.role === 'user' ? 'bg-primary text-primary-foreground' : 'bg-muted'
+            <div key={i} className={`flex flex-col ${m.role === 'user' ? 'items-end' : 'items-start'} mb-6`}>
+              <div className={`max-w-[90%] rounded-xl px-4 py-3 text-sm leading-relaxed ${
+                m.role === 'user'
+                  ? 'bg-primary/10 border border-primary/20 text-foreground'
+                  : 'bg-muted/40 border border-border/40 text-foreground'
               }`}>
-                <div className="flex items-center gap-2 mb-1">
-                  {m.role === 'user' ? <User size={14} /> : <Bot size={14} />}
-                  <span className="text-[10px] uppercase font-bold opacity-70">
-                    {m.role}
-                  </span>
-                </div>
-                <p className="text-sm whitespace-pre-wrap">{m.content}</p>
+                <p className="whitespace-pre-wrap">{m.content}</p>
                 {m.action && (
-                  <div className="mt-2 p-2 bg-background/50 rounded border border-dashed text-[10px] font-mono">
+                  <div className="mt-3 p-2 bg-background/40 rounded-md border border-border/40 text-[10px] font-mono flex items-center gap-2">
+                    <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
                     Action: {m.action.action}
                   </div>
                 )}
               </div>
+              <span className="text-[9px] uppercase tracking-tighter font-bold opacity-30 mt-1.5 px-1">
+                {m.role}
+              </span>
             </div>
           ))}
           {isLoading && (
@@ -129,16 +129,28 @@ export function AIAssistant({ onActionExecute }: AIAssistantProps) {
         </div>
       </ScrollArea>
 
-      <div className="p-4 border-t flex gap-2">
-        <Input
-          placeholder="Ask me anything..."
-          value={input}
-          onChange={(e) => setInput(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && handleSend()}
-        />
-        <Button size="icon" onClick={handleSend} disabled={isLoading}>
-          <Send size={18} />
-        </Button>
+      <div className="p-4 border-t border-border/40 bg-background/50">
+        <div className="relative flex items-center">
+          <Input
+            className="pr-10 bg-muted/20 border-border/40 focus:ring-1 focus:ring-primary/40 rounded-xl"
+            placeholder="Type a command or ask a question..."
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+          />
+          <Button
+            size="icon"
+            variant="ghost"
+            className="absolute right-1 w-8 h-8 hover:bg-primary/10 hover:text-primary transition-colors"
+            onClick={handleSend}
+            disabled={isLoading}
+          >
+            {isLoading ? <Loader2 className="animate-spin" size={14} /> : <Send size={14} />}
+          </Button>
+        </div>
+        <p className="text-[9px] text-center text-muted-foreground mt-3 uppercase tracking-widest opacity-50">
+          Powered by Qwen 2.5 local LLM
+        </p>
       </div>
     </div>
   );

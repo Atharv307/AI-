@@ -58,66 +58,94 @@ export default function WorkspacePage() {
   return (
     <div className="flex h-screen w-full bg-background overflow-hidden">
       {/* Navigation Rail */}
-      <div className="w-16 border-r flex flex-col items-center py-4 gap-4 bg-muted/20">
+      <div className="w-14 border-r border-border/40 flex flex-col items-center py-4 gap-4 bg-background">
+        <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
+          <div className="w-4 h-4 rounded-sm bg-primary" />
+        </div>
         <Button
-          variant={view === 'workspace' ? 'default' : 'ghost'}
+          variant={view === 'workspace' ? 'secondary' : 'ghost'}
           size="icon"
+          className="w-10 h-10 rounded-lg"
           onClick={() => setView('workspace')}
           title="Workspace"
         >
-          <Code size={20} />
+          <Code size={18} />
         </Button>
         <Button
-          variant={view === 'dashboard' ? 'default' : 'ghost'}
+          variant={view === 'dashboard' ? 'secondary' : 'ghost'}
           size="icon"
+          className="w-10 h-10 rounded-lg"
           onClick={() => setView('dashboard')}
           title="Dashboard"
         >
-          <Layout size={20} />
+          <Layout size={18} />
         </Button>
         <div className="mt-auto">
           <Button
-            variant={view === 'profile' ? 'default' : 'ghost'}
+            variant={view === 'profile' ? 'secondary' : 'ghost'}
             size="icon"
+            className="w-10 h-10 rounded-lg"
             onClick={() => setView('profile')}
             title="Profile & Settings"
           >
-            <UserCircle size={20} />
+            <UserCircle size={18} />
           </Button>
         </div>
       </div>
 
       {view === 'profile' ? (
-        <div className="flex-1 overflow-auto p-8 max-w-2xl mx-auto">
-          <h1 className="text-3xl font-bold mb-8">Profile & Settings</h1>
-          <div className="space-y-6">
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Target Job Role</label>
-              <Input
-                value={progress.targetJob || ''}
-                onChange={(e) => setTargetJob(e.target.value)}
-                placeholder="e.g. AI SaaS Founder, Junior AI Engineer"
-              />
-              <p className="text-xs text-muted-foreground">We'll tailor your recommendations based on this goal.</p>
-            </div>
-            <div className="space-y-2">
-              <label className="text-sm font-medium">Skill Level</label>
-              <div className="flex gap-2">
-                {['beginner', 'intermediate', 'advanced'].map((lvl) => (
-                  <Button
-                    key={lvl}
-                    variant={progress.skillLevel === lvl ? 'default' : 'outline'}
-                    size="sm"
-                    className="capitalize"
-                    onClick={() => useUserStore.setState({ progress: { ...progress, skillLevel: lvl as any } })}
-                  >
-                    {lvl}
-                  </Button>
-                ))}
+        <div className="flex-1 overflow-auto bg-background">
+          <div className="max-w-3xl mx-auto py-20 px-8">
+            <div className="flex items-center gap-4 mb-12">
+              <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center border border-primary/20 text-primary">
+                <UserCircle size={32} />
+              </div>
+              <div>
+                <h1 className="text-3xl font-semibold tracking-tight text-foreground">Account Settings</h1>
+                <p className="text-muted-foreground text-sm">Personalize your learning journey and goals.</p>
               </div>
             </div>
-            <div className="pt-4">
-              <Button onClick={() => setView('workspace')}>Save and Continue</Button>
+
+            <div className="space-y-12">
+              <section className="space-y-4">
+                <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground border-b border-border/40 pb-2">Career Goal</h3>
+                <div className="space-y-2">
+                  <label className="text-sm font-medium text-foreground/80">Target Job Role</label>
+                  <Input
+                    className="bg-card/30 border-border/40 focus:ring-1 focus:ring-primary/40 h-10 rounded-lg"
+                    value={progress.targetJob || ''}
+                    onChange={(e) => setTargetJob(e.target.value)}
+                    placeholder="e.g. AI SaaS Founder, Junior AI Engineer"
+                  />
+                  <p className="text-[11px] text-muted-foreground italic">Your curriculum recommendations are prioritized based on this role.</p>
+                </div>
+              </section>
+
+              <section className="space-y-4">
+                <h3 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground border-b border-border/40 pb-2">Experience</h3>
+                <div className="space-y-3">
+                  <label className="text-sm font-medium text-foreground/80">Current Skill Level</label>
+                  <div className="flex gap-3">
+                    {['beginner', 'intermediate', 'advanced'].map((lvl) => (
+                      <button
+                        key={lvl}
+                        className={`flex-1 py-3 px-4 rounded-xl border text-xs font-medium transition-all ${
+                          progress.skillLevel === lvl
+                            ? 'bg-primary/10 border-primary text-primary shadow-[0_0_15px_rgba(var(--primary),0.1)]'
+                            : 'bg-card/20 border-border/40 text-muted-foreground hover:border-border hover:bg-card/40'
+                        } capitalize`}
+                        onClick={() => useUserStore.setState({ progress: { ...progress, skillLevel: lvl as any } })}
+                      >
+                        {lvl}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+              </section>
+
+              <div className="pt-8 flex justify-end">
+                <Button variant="primary" className="px-8 h-10 rounded-lg font-medium" onClick={() => setView('workspace')}>Save Changes</Button>
+              </div>
             </div>
           </div>
         </div>
@@ -131,15 +159,15 @@ export default function WorkspacePage() {
       ) : (
         <>
       {/* Sidebar - Curriculum & Files */}
-      <div className="w-80 flex flex-col border-r">
+      <div className="w-72 flex flex-col border-r border-border/40 bg-card/30">
         <Tabs defaultValue="lesson" className="flex-1 flex flex-col">
-          <div className="px-4 py-2 border-b">
-            <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="lesson">
-                <BookOpen size={16} className="mr-2" /> Lesson
+          <div className="px-3 py-3">
+            <TabsList className="grid w-full grid-cols-2 bg-muted/30 p-1 rounded-md">
+              <TabsTrigger value="lesson" className="rounded-sm text-xs py-1.5 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                <BookOpen size={14} className="mr-2" /> Lesson
               </TabsTrigger>
-              <TabsTrigger value="files">
-                <Code size={16} className="mr-2" /> Files
+              <TabsTrigger value="files" className="rounded-sm text-xs py-1.5 data-[state=active]:bg-background data-[state=active]:shadow-sm">
+                <Code size={14} className="mr-2" /> Files
               </TabsTrigger>
             </TabsList>
           </div>
@@ -158,27 +186,27 @@ export default function WorkspacePage() {
       {/* Main Area - Editor & Terminal / Playground */}
       <div className="flex-1 flex flex-col min-w-0">
         <Tabs defaultValue="editor" className="flex-1 flex flex-col">
-          <div className="flex items-center justify-between border-b px-4 h-12 bg-muted/20">
-            <TabsList className="h-8 bg-transparent border-none">
-              <TabsTrigger value="editor" className="data-[state=active]:bg-background data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary rounded-none px-4 h-8 text-xs">
-                <Code size={14} className="mr-2" /> Editor
+          <div className="flex items-center justify-between border-b border-border/40 px-4 h-12 bg-background">
+            <TabsList className="h-12 bg-transparent border-none rounded-none">
+              <TabsTrigger value="editor" className="data-[state=active]:bg-transparent data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary rounded-none px-4 h-12 text-xs font-medium">
+                Editor
               </TabsTrigger>
-              <TabsTrigger value="playground" className="data-[state=active]:bg-background data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary rounded-none px-4 h-8 text-xs">
-                <Layout size={14} className="mr-2" /> Prompt Playground
+              <TabsTrigger value="playground" className="data-[state=active]:bg-transparent data-[state=active]:shadow-none border-b-2 border-transparent data-[state=active]:border-primary rounded-none px-4 h-12 text-xs font-medium">
+                Playground
               </TabsTrigger>
             </TabsList>
-            <div className="flex items-center gap-4">
-              <div className="text-[10px] text-muted-foreground font-mono">
+            <div className="flex items-center gap-3">
+              <div className="text-[10px] text-muted-foreground font-mono px-2 py-1 bg-muted/30 rounded border border-border/40">
                 {selectedFile || 'No file open'}
               </div>
               <Button
                 size="sm"
-                variant="default"
-                className="h-7 text-xs px-3"
+                variant="primary"
+                className="h-7 text-xs px-3 rounded-md shadow-sm"
                 disabled={!selectedFile}
                 onClick={() => selectedFile && handleRunCommand(`python3 ${selectedFile}`)}
               >
-                <Play size={14} className="mr-2" /> Run
+                <Play size={12} className="mr-1.5 fill-current" /> Run
               </Button>
             </div>
           </div>

@@ -24,11 +24,11 @@ export function Dashboard({ onLessonSelect }: DashboardProps) {
   ];
 
   return (
-    <div className="p-8 space-y-8 max-w-6xl mx-auto">
-      <div className="flex items-center justify-between">
+    <div className="p-12 space-y-12 max-w-7xl mx-auto">
+      <div className="flex items-end justify-between border-b border-border/40 pb-8">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Your Progress</h1>
-          <p className="text-muted-foreground">Keep building to unlock more tracks.</p>
+          <h1 className="text-4xl font-semibold tracking-tight">Overview</h1>
+          <p className="text-muted-foreground mt-2">Track your journey to becoming an AI Engineer.</p>
         </div>
         <div className="flex items-center gap-2">
           <Target className="text-primary" />
@@ -36,81 +36,68 @@ export function Dashboard({ onLessonSelect }: DashboardProps) {
         </div>
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (
-          <Card key={stat.label}>
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{stat.label}</CardTitle>
-              <stat.icon className={`h-4 w-4 ${stat.color}`} />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">{stat.value}</div>
-              <Progress value={(stat.value / stat.total) * 100} className="mt-2 h-1" />
-              <p className="text-xs text-muted-foreground mt-2">
-                {stat.total - stat.value} more to go
-              </p>
-            </CardContent>
-          </Card>
+          <div key={stat.label} className="p-6 rounded-2xl bg-card/40 border border-border/40 hover:border-primary/40 transition-colors">
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-xs font-semibold uppercase tracking-wider text-muted-foreground">{stat.label}</span>
+              <stat.icon size={16} className={stat.color} />
+            </div>
+            <div className="text-3xl font-semibold mb-2">{stat.value}</div>
+            <Progress value={(stat.value / stat.total) * 100} className="h-1 bg-muted/30" />
+          </div>
         ))}
       </div>
 
-      <div className="grid gap-4 md:grid-cols-3">
-        <Card className="md:col-span-1">
-          <CardHeader>
-            <CardTitle className="text-lg flex items-center gap-2">
-              <Target className="h-5 w-5 text-primary" /> What's Next?
-            </CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
+      <div className="grid gap-8 md:grid-cols-3">
+        <div className="md:col-span-1 space-y-4">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground px-1">What's Next?</h3>
+          <div className="space-y-3">
             {recommendations.length > 0 ? (
               recommendations.map(lesson => (
                 <div
                   key={lesson.id}
-                  className="p-3 border rounded-lg hover:bg-muted/50 cursor-pointer transition-colors"
+                  className="p-4 rounded-xl bg-card/30 border border-border/40 hover:border-primary/40 hover:bg-card/50 cursor-pointer transition-all group"
                   onClick={() => {
                     if (onLessonSelect) onLessonSelect(lesson.id);
                   }}
                 >
-                  <div className="text-xs font-semibold uppercase text-muted-foreground mb-1">{lesson.track}</div>
-                  <div className="text-sm font-medium">{lesson.title}</div>
-                  <div className="text-xs text-muted-foreground line-clamp-1">{lesson.description}</div>
+                  <div className="text-[10px] font-bold uppercase tracking-widest text-primary/70 mb-1 group-hover:text-primary transition-colors">{lesson.track}</div>
+                  <div className="text-sm font-semibold mb-1">{lesson.title}</div>
+                  <div className="text-xs text-muted-foreground line-clamp-2 leading-relaxed">{lesson.description}</div>
                 </div>
               ))
             ) : (
-              <p className="text-sm text-muted-foreground italic">You've completed everything! Time for a Capstone.</p>
+              <p className="text-sm text-muted-foreground italic px-1">Everything complete! Start a Capstone.</p>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        <Card className="md:col-span-1">
-          <CardHeader>
-            <CardTitle>Skills Gained</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-wrap gap-2">
+        <div className="md:col-span-1 space-y-4">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground px-1">Skills Gained</h3>
+          <div className="flex flex-wrap gap-2">
             {progress.skills.length > 0 ? (
               progress.skills.map(skill => (
-                <Badge key={skill} variant="secondary">{skill}</Badge>
+                <Badge key={skill} variant="secondary" className="bg-primary/5 border-primary/20 text-primary-foreground/90 rounded-md py-1">{skill}</Badge>
               ))
             ) : (
-              <p className="text-sm text-muted-foreground italic">No skills yet. Start your first lesson!</p>
+              <p className="text-sm text-muted-foreground italic px-1">No skills yet.</p>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
 
-        <Card>
-          <CardHeader>
-            <CardTitle>Terminal Mastery</CardTitle>
-          </CardHeader>
-          <CardContent className="flex flex-wrap gap-2">
+        <div className="md:col-span-1 space-y-4">
+          <h3 className="text-xs font-semibold uppercase tracking-wider text-muted-foreground px-1">Terminal Mastery</h3>
+          <div className="flex flex-wrap gap-2">
             {progress.commandsMastered.length > 0 ? (
               progress.commandsMastered.map(cmd => (
-                <code key={cmd} className="text-xs bg-muted p-1 rounded font-mono">{cmd}</code>
+                <code key={cmd} className="text-[10px] bg-muted/40 border border-border/40 px-1.5 py-0.5 rounded text-muted-foreground font-mono">{cmd}</code>
               ))
             ) : (
-              <p className="text-sm text-muted-foreground italic">Master terminal commands through lessons.</p>
+              <p className="text-sm text-muted-foreground italic px-1">Master commands in lessons.</p>
             )}
-          </CardContent>
-        </Card>
+          </div>
+        </div>
       </div>
     </div>
   );
