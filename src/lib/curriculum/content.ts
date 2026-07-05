@@ -84,10 +84,24 @@ export const lessons: Lesson[] = [
     description: 'Chat with your own documents.',
     track: 'rag-systems',
     difficulty: 'intermediate',
-    content: '# Project: RAG Assistant\nUse the `ollama_client.py` helper to power your RAG assistant with your local model.',
+    content: `
+# Project: RAG Assistant
+
+Building a **RAG (Retrieval-Augmented Generation)** assistant allows your AI to "read" your documents and answer questions about them.
+
+### Your Build Plan:
+1. **Initialize**: Use the Assistant to create a new folder called \`rag_project\`.
+2. **Setup**: Create an \`app.py\` that imports \`SimpleVectorStore\` from \`ollama_client.py\`.
+3. **Data**: Add a few text files to a \`data/\` folder.
+4. **Logic**: Write code to loop through your data files, add them to the vector store, and then use the LLM to answer a user question.
+
+### Pro Tip:
+Ask the AI Assistant: "Help me build the RAG project folder structure and a basic app.py using the SimpleVectorStore."
+`,
     tasks: [
-      { id: 'r1', description: 'Import ollama_client in your project', completed: false },
-      { id: 'r2', description: 'Index local files', completed: false }
+      { id: 'r1', description: 'Initialize rag_project folder', completed: false },
+      { id: 'r2', description: 'Add documents to SimpleVectorStore', completed: false },
+      { id: 'r3', description: 'Run retrieval-augmented chat', completed: false }
     ],
   },
   {
@@ -107,10 +121,29 @@ export const lessons: Lesson[] = [
     description: 'Orchestrate agents for deep analysis.',
     track: 'agentic-ai',
     difficulty: 'intermediate',
-    content: '# Project: Research Team\nUse your local Qwen model to orchestrate multiple specialized AI workers.',
+    content: `
+# Project: Multi-Agent Research Team
+
+Multi-agent systems use multiple specialized "agents" (LLM instances with different instructions) to solve complex problems together.
+
+### Your Build Plan:
+1. **Define Roles**: Create a \`research_team/\` folder.
+2. **Implement Agents**: Create an \`agents.py\` that initializes three \`OllamaClient\` instances:
+   - **Researcher**: Finds facts.
+   - **Editor**: Refines the writing.
+   - **Manager**: Coordinates the workflow.
+3. **Connect**: Write a main script to pass the "handoff" between agents.
+
+### Key Concept:
+Each agent has its own **System Prompt** defining its specific expertise.
+
+### Get Started:
+Ask the Assistant: "Help me architect a multi-agent research team folder structure and agent roles."
+`,
     tasks: [
-      { id: 'a1', description: 'Test ollama_client.py connection', completed: false },
-      { id: 'a2', description: 'Define agent roles', completed: false }
+      { id: 'a1', description: 'Define System Prompts for 3 roles', completed: false },
+      { id: 'a2', description: 'Implement Agent handoff logic', completed: false },
+      { id: 'a3', description: 'Run a full research workflow', completed: false }
     ],
   },
   {

@@ -24,6 +24,49 @@ export async function ensureWorkspace() {
     // Create the Ollama helper for learner projects
     const helperContent = `import requests
 import json
+import os
+
+class OllamaClient:
+    def __init__(self, model="qwen2.5:1.5b", base_url="http://localhost:11434"):
+        self.model = model
+        self.base_url = base_url
+
+    def chat(self, prompt, system="You are a helpful assistant."):
+        url = f"{self.base_url}/api/chat"
+        payload = {
+            "model": self.model,
+            "messages": [
+                {"role": "system", "content": system},
+                {"role": "user", "content": prompt}
+            ],
+            "stream": False
+        }
+        try:
+            response = requests.post(url, json=payload)
+            response.raise_for_status()
+            return response.json()["message"]["content"]
+        except Exception as e:
+            return f"Error: {str(e)}"
+
+class SimpleVectorStore:
+    """A beginner-friendly vector store mock that uses simple string matching."""
+    def __init__(self):
+        self.documents = []
+
+    def add_document(self, text, metadata=None):
+        self.documents.append({"text": text, "metadata": metadata or {}})
+
+    def search(self, query, k=2):
+        # Basic keyword-based similarity for learning purposes
+        query_words = set(query.lower().split())
+        results = []
+        for doc in self.documents:
+            doc_words = set(doc["text"].lower().split())
+            score = len(query_words.intersection(doc_words))
+            results.append((score, doc))
+
+        results.sort(key=lambda x: x[0], reverse=True)
+        return [r[1] for r in results[:k]]
 
 def chat_with_llm(prompt, model="qwen2.5:1.5b"):
     url = "http://localhost:11434/api/chat"
@@ -45,6 +88,7 @@ if __name__ == "__main__":
     print(f"Response: {chat_with_llm(test_prompt)}")
 `;
     await fs.writeFile(path.join(WORKSPACE_ROOT, 'ollama_client.py'), helperContent, 'utf-8');
+    await fs.writeFile(path.join(WORKSPACE_ROOT, 'requirements.txt'), 'requests\n', 'utf-8');
   }
 }
 
