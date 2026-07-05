@@ -1,7 +1,7 @@
 'use client';
 
-import React, { useState } from 'react';
-import { Terminal as TerminalIcon, Code, BookOpen, Layout, Play } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Terminal as TerminalIcon, Code, BookOpen, Layout, Play, Bot } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -19,6 +19,13 @@ import { Settings, UserCircle } from 'lucide-react';
 export default function WorkspacePage() {
   const { currentLessonId, setCurrentLesson, progress, setTargetJob, setSkillLevel } = useUserStore();
   const [view, setView] = useState<'workspace' | 'dashboard' | 'profile'>('workspace');
+  const [showOnboarding, setShowOnboarding] = useState(false);
+
+  useEffect(() => {
+    if (!progress.targetJob) {
+      setShowOnboarding(true);
+    }
+  }, [progress.targetJob]);
 
   const currentLesson = lessons.find(l => l.id === currentLessonId) || lessons[0];
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
@@ -57,6 +64,44 @@ export default function WorkspacePage() {
 
   return (
     <div className="flex h-screen w-full bg-background overflow-hidden text-foreground selection:bg-primary/30">
+      {showOnboarding && (
+        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-md flex items-center justify-center p-6">
+          <div className="max-w-md w-full bg-card border border-border/40 rounded-3xl p-8 shadow-2xl space-y-6">
+            <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center text-primary mb-2">
+              <Bot size={28} />
+            </div>
+            <h2 className="text-2xl font-bold tracking-tight">Welcome to AI Engineer</h2>
+            <p className="text-muted-foreground leading-relaxed">
+              We'll help you go from zero to building production-ready AI agents. To personalize your journey, what's your current goal?
+            </p>
+            <div className="space-y-4">
+              <Input
+                placeholder="e.g. Become a High-Paid AI Engineer"
+                className="bg-muted/30 border-border/40 h-12 rounded-xl"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setTargetJob((e.target as HTMLInputElement).value);
+                    setShowOnboarding(false);
+                  }
+                }}
+              />
+              <Button
+                variant="primary"
+                className="w-full h-12 rounded-xl text-md font-semibold"
+                onClick={() => {
+                  const input = document.querySelector('input') as HTMLInputElement;
+                  if (input.value) {
+                    setTargetJob(input.value);
+                    setShowOnboarding(false);
+                  }
+                }}
+              >
+                Start Building
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
       {/* Navigation Rail */}
       <div className="w-14 border-r border-border/40 flex flex-col items-center py-4 gap-4 bg-background">
         <div className="w-8 h-8 rounded-lg bg-primary/10 flex items-center justify-center mb-4">
