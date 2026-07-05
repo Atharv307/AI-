@@ -4,6 +4,7 @@ import React, { useState } from 'react';
 import { Terminal as TerminalIcon, Code, BookOpen, Layout, Play } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 import { FileExplorer } from '@/components/sandbox/FileExplorer';
 import { CodeEditor } from '@/components/sandbox/CodeEditor';
 import { Terminal } from '@/components/sandbox/Terminal';
@@ -13,10 +14,11 @@ import { PromptPlayground } from '@/components/PromptPlayground';
 import { Dashboard } from '@/components/Dashboard';
 import { lessons } from '@/lib/curriculum/content';
 import { useUserStore } from '@/store/userStore';
+import { Settings, UserCircle } from 'lucide-react';
 
 export default function WorkspacePage() {
-  const { currentLessonId, setCurrentLesson } = useUserStore();
-  const [view, setView] = useState<'workspace' | 'dashboard'>('workspace');
+  const { currentLessonId, setCurrentLesson, progress, setTargetJob } = useUserStore();
+  const [view, setView] = useState<'workspace' | 'dashboard' | 'profile'>('workspace');
 
   const currentLesson = lessons.find(l => l.id === currentLessonId) || lessons[0];
   const [selectedFile, setSelectedFile] = useState<string | null>(null);
@@ -73,9 +75,53 @@ export default function WorkspacePage() {
         >
           <Layout size={20} />
         </Button>
+        <div className="mt-auto">
+          <Button
+            variant={view === 'profile' ? 'default' : 'ghost'}
+            size="icon"
+            onClick={() => setView('profile')}
+            title="Profile & Settings"
+          >
+            <UserCircle size={20} />
+          </Button>
+        </div>
       </div>
 
-      {view === 'dashboard' ? (
+      {view === 'profile' ? (
+        <div className="flex-1 overflow-auto p-8 max-w-2xl mx-auto">
+          <h1 className="text-3xl font-bold mb-8">Profile & Settings</h1>
+          <div className="space-y-6">
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Target Job Role</label>
+              <Input
+                value={progress.targetJob || ''}
+                onChange={(e) => setTargetJob(e.target.value)}
+                placeholder="e.g. AI SaaS Founder, Junior AI Engineer"
+              />
+              <p className="text-xs text-muted-foreground">We'll tailor your recommendations based on this goal.</p>
+            </div>
+            <div className="space-y-2">
+              <label className="text-sm font-medium">Skill Level</label>
+              <div className="flex gap-2">
+                {['beginner', 'intermediate', 'advanced'].map((lvl) => (
+                  <Button
+                    key={lvl}
+                    variant={progress.skillLevel === lvl ? 'default' : 'outline'}
+                    size="sm"
+                    className="capitalize"
+                    onClick={() => useUserStore.setState({ progress: { ...progress, skillLevel: lvl as any } })}
+                  >
+                    {lvl}
+                  </Button>
+                ))}
+              </div>
+            </div>
+            <div className="pt-4">
+              <Button onClick={() => setView('workspace')}>Save and Continue</Button>
+            </div>
+          </div>
+        </div>
+      ) : view === 'dashboard' ? (
         <div className="flex-1 overflow-auto">
           <Dashboard onLessonSelect={(lessonId) => {
             setCurrentLesson(lessonId);
