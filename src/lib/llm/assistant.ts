@@ -41,22 +41,23 @@ export async function processAIAssistantRequest(userMessage: string, history: an
   const response = await chat(messages as any);
   const content = response.message.content;
 
-  // Simple extraction of JSON from response
-  const jsonMatch = content.match(/\{[\s\S]*"action"[\s\S]*\}/);
-  let action = null;
+  // Robust extraction of all JSON actions from response
+  const jsonMatches = content.matchAll(/\{[\s\S]*?"action"[\s\S]*?\}/g);
+  const actions: any[] = [];
   let cleanText = content;
 
-  if (jsonMatch) {
+  for (const match of jsonMatches) {
     try {
-      action = JSON.parse(jsonMatch[0]);
-      cleanText = content.replace(jsonMatch[0], '').trim();
+      const action = JSON.parse(match[0]);
+      actions.push(action);
+      cleanText = cleanText.replace(match[0], '');
     } catch (e) {
       console.error('Failed to parse AI action:', e);
     }
   }
 
   return {
-    text: cleanText,
-    action
+    text: cleanText.trim(),
+    actions
   };
 }

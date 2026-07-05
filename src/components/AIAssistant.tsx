@@ -10,11 +10,11 @@ import { Badge } from '@/components/ui/badge';
 interface Message {
   role: 'user' | 'assistant';
   content: string;
-  action?: any;
+  actions?: any[];
 }
 
 interface AIAssistantProps {
-  onActionExecute?: (action: any) => Promise<void>;
+  onActionExecute?: (actions: any[]) => Promise<void>;
 }
 
 export function AIAssistant({ onActionExecute }: AIAssistantProps) {
@@ -62,11 +62,11 @@ export function AIAssistant({ onActionExecute }: AIAssistantProps) {
       setMessages(prev => [...prev, {
         role: 'assistant',
         content: data.text,
-        action: data.action
+        actions: data.actions
       }]);
 
-      if (data.action && onActionExecute) {
-        await onActionExecute(data.action);
+      if (data.actions && data.actions.length > 0 && onActionExecute) {
+        await onActionExecute(data.actions);
       }
     } catch (error) {
       setMessages(prev => [...prev, {
@@ -106,12 +106,12 @@ export function AIAssistant({ onActionExecute }: AIAssistantProps) {
                   : 'bg-muted/40 border border-border/40 text-foreground'
               }`}>
                 <p className="whitespace-pre-wrap">{m.content}</p>
-                {m.action && (
-                  <div className="mt-3 p-2 bg-background/40 rounded-md border border-border/40 text-[10px] font-mono flex items-center gap-2">
+                {m.actions && m.actions.map((act: any, idx: number) => (
+                  <div key={idx} className="mt-3 p-2 bg-background/40 rounded-md border border-border/40 text-[10px] font-mono flex items-center gap-2">
                     <div className="w-1.5 h-1.5 rounded-full bg-primary animate-pulse" />
-                    Action: {m.action.action}
+                    Action: {act.action}
                   </div>
-                )}
+                ))}
               </div>
               <span className="text-[9px] uppercase tracking-tighter font-bold opacity-30 mt-1.5 px-1">
                 {m.role}

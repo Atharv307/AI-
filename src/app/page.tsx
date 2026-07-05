@@ -243,20 +243,22 @@ export default function WorkspacePage() {
 
       {/* Right Sidebar - AI Assistant */}
       <div className="w-96 flex flex-col">
-        <AIAssistant onActionExecute={async (action) => {
-          if (action.action === 'write_file') {
-            await fetch('/api/workspace', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                action: 'write',
-                path: action.parameters.path,
-                content: action.parameters.content
-              })
-            });
-            setRefreshFilesKey(k => k + 1);
-          } else if (action.action === 'run_command') {
-            await handleRunCommand(action.parameters.command);
+        <AIAssistant onActionExecute={async (actions) => {
+          for (const action of actions) {
+            if (action.action === 'write_file') {
+              await fetch('/api/workspace', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  action: 'write',
+                  path: action.parameters.path,
+                  content: action.parameters.content
+                })
+              });
+              setRefreshFilesKey(k => k + 1);
+            } else if (action.action === 'run_command') {
+              await handleRunCommand(action.parameters.command);
+            }
           }
         }} />
       </div>
