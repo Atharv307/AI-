@@ -84,8 +84,11 @@ export const lessons: Lesson[] = [
     description: 'Chat with your own documents.',
     track: 'rag-systems',
     difficulty: 'intermediate',
-    content: '# Project: RAG Assistant\nConnect AI to your PDFs and notes.',
-    tasks: [{ id: 'r1', description: 'Index local files', completed: false }],
+    content: '# Project: RAG Assistant\nUse the `ollama_client.py` helper to power your RAG assistant with your local model.',
+    tasks: [
+      { id: 'r1', description: 'Import ollama_client in your project', completed: false },
+      { id: 'r2', description: 'Index local files', completed: false }
+    ],
   },
   {
     id: 'rag-company',
@@ -104,8 +107,11 @@ export const lessons: Lesson[] = [
     description: 'Orchestrate agents for deep analysis.',
     track: 'agentic-ai',
     difficulty: 'intermediate',
-    content: '# Project: Research Team\nManaging multiple specialized AI workers.',
-    tasks: [{ id: 'a1', description: 'Define agent roles', completed: false }],
+    content: '# Project: Research Team\nUse your local Qwen model to orchestrate multiple specialized AI workers.',
+    tasks: [
+      { id: 'a1', description: 'Test ollama_client.py connection', completed: false },
+      { id: 'a2', description: 'Define agent roles', completed: false }
+    ],
   },
   {
     id: 'ag-deal',

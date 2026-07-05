@@ -18,8 +18,33 @@ export async function ensureWorkspace() {
   await fs.mkdir(WORKSPACE_ROOT, { recursive: true });
   // Initial seed files if empty
   const files = await fs.readdir(WORKSPACE_ROOT);
-  if (files.length === 0) {
+  if (files.length <= 1) {
     await fs.writeFile(path.join(WORKSPACE_ROOT, 'hello_ai.py'), 'print("Welcome to AI Engineering!")', 'utf-8');
+
+    // Create the Ollama helper for learner projects
+    const helperContent = `import requests
+import json
+
+def chat_with_llm(prompt, model="qwen2.5:1.5b"):
+    url = "http://localhost:11434/api/chat"
+    payload = {
+        "model": model,
+        "messages": [{"role": "user", "content": prompt}],
+        "stream": False
+    }
+    try:
+        response = requests.post(url, json=payload)
+        response.raise_for_status()
+        return response.json()["message"]["content"]
+    except Exception as e:
+        return f"Error connecting to local LLM: {str(e)}"
+
+if __name__ == "__main__":
+    test_prompt = "What is AI Engineering in one sentence?"
+    print(f"Prompt: {test_prompt}")
+    print(f"Response: {chat_with_llm(test_prompt)}")
+`;
+    await fs.writeFile(path.join(WORKSPACE_ROOT, 'ollama_client.py'), helperContent, 'utf-8');
   }
 }
 
