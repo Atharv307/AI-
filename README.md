@@ -2,35 +2,32 @@
 
 Welcome to the **AI Engineer Learning Platform**, a local-first environment designed to take you from absolute beginner to building production-ready AI agents and systems.
 
-## 🚀 Quick Start (One-Click)
+## 🚀 One-Click Launch (Windows)
 
-### Windows
-Double-click **`run.bat`**. It will automatically check for Node.js, install dependencies, build the platform, and launch it in your browser.
+1. Ensure you have **Node.js** installed (Download from [nodejs.org](https://nodejs.org/)).
+2. Double-click **`run.bat`**.
+3. The platform will automatically setup, build, and open in your browser at `http://localhost:3000`.
 
-### macOS / Linux
-Run `sh run.sh` in your terminal.
+*Note: If `run.bat` doesn't work for you, try right-clicking `serve-local.ps1` and selecting "Run with PowerShell".*
+
+## 🍎 One-Click Launch (macOS / Linux)
+
+1. Open your terminal in this folder.
+2. Run `sh run.sh`.
 
 ## 🛠 Features
 
 - **Interactive Sandbox**: Full-featured code editor (Monaco) and terminal (Xterm.js).
-- **AI Assistant**: An integrated guide powered by local LLMs (via Ollama). It can write files, run commands, and explain complex concepts simply.
-- **Vibe Coding**: Support for high-level intent-based development.
-- **Comprehensive Curriculum**: 6 tracks covering Prompt Engineering, AI Coding, RAG, Agents, Systems Architecture, and MLOps.
-- **Local-First**: Your data and code stay on your machine.
+- **AI Assistant**: An integrated guide powered by local LLMs (via Ollama).
+- **Mock Mode**: The assistant works even without Ollama, providing templates and guidance.
+- **Full Curriculum**: 6 tracks covering Prompt Engineering, AI Coding, RAG, Agents, Systems, and MLOps.
 
-## 📚 Curriculum Tracks
+## 💡 Important: Setup for AI Assistant
 
-1. **Prompt Engineering**: Master the art of communicating with AI.
-2. **AI Coding**: Build apps at the speed of thought.
-3. **RAG Systems**: Connect AI to your own knowledge.
-4. **Agentic AI**: Build autonomous AI teams.
-5. **Systems Thinking**: Architect robust AI software.
-6. **MLOps**: Deploy and monitor AI in production.
+To use the full "Generative" power of the AI Assistant, you must have **Ollama** installed and running on your machine:
 
-## 📋 Requirements
-
-- **Node.js**: Required to run the platform.
-- **Ollama**: Required for the AI Assistant's generative features (install from [ollama.com](https://ollama.com)).
+1. Download Ollama from [ollama.com](https://ollama.com).
+2. The platform uses the `qwen2.5:1.5b` model by default (lightweight and fast).
 
 ---
 *Built for the next generation of AI Engineers.*
